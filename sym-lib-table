@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Yet_Another_Business_Card-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/Yet_Another_Business_Card-eagle-import.kicad_sym")(options "")(descr ""))
+)
