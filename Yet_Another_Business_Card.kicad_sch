@@ -326,6 +326,297 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:Conn_01x05_Socket"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x05_Socket"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x05, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x05_Socket_1_1"
+				(polyline
+					(pts
+						(xy -1.27 5.08) (xy -0.508 5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 2.54) (xy -0.508 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy -0.508 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy -0.508 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -5.08) (xy -0.508 -5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 4.572)
+					(mid -0.5058 5.08)
+					(end 0 5.588)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 2.032)
+					(mid -0.5058 2.54)
+					(end 0 3.048)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 -0.508)
+					(mid -0.5058 0)
+					(end 0 0.508)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 -3.048)
+					(mid -0.5058 -2.54)
+					(end 0 -2.032)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 -5.588)
+					(mid -0.5058 -5.08)
+					(end 0 -4.572)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 5.08 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C"
 			(pin_numbers
 				(hide yes)
@@ -2254,6 +2545,28 @@
 			(type none)
 		)
 		(uuid cd095360-7aff-44c5-84f6-9dfd7edac8de)
+	)
+	(rectangle
+		(start 35.56 63.5)
+		(end 175.26 102.87)
+		(stroke
+			(width 0.254)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid fe630cc2-182e-4f6a-afe3-57303606d8aa)
+	)
+	(text "SWDIO CONNECTOR"
+		(exclude_from_sim no)
+		(at 53.086 59.436 0)
+		(effects
+			(font
+				(size 2.54 2.54)
+			)
+		)
+		(uuid "5a05f1d5-f8f6-4469-880f-98b6ee823e72")
 	)
 	(text "MCU"
 		(exclude_from_sim no)
@@ -6752,10 +7065,6 @@
 		(uuid "b5151770-a2d9-4952-b276-a12e858e78ce")
 	)
 	(no_connect
-		(at 121.92 185.42)
-		(uuid "bc9008dc-2097-465d-baae-c12432f2d423")
-	)
-	(no_connect
 		(at 86.36 190.5)
 		(uuid "c0e70133-37cf-409a-9a63-2b6c34ba5bc8")
 	)
@@ -6766,10 +7075,6 @@
 	(no_connect
 		(at 86.36 218.44)
 		(uuid "d2ebcedf-74a7-4d6d-9078-80b0ba923a00")
-	)
-	(no_connect
-		(at 121.92 187.96)
-		(uuid "e2fc122f-3de5-42eb-9368-29857fcdee5c")
 	)
 	(wire
 		(pts
@@ -6960,6 +7265,16 @@
 			(type dot)
 		)
 		(uuid "021975dc-a9ee-4e51-aedb-a3c188f46b55")
+	)
+	(wire
+		(pts
+			(xy 146.05 189.23) (xy 147.32 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "022e7f10-5689-4efc-808d-77c9bc9c5deb")
 	)
 	(wire
 		(pts
@@ -7440,6 +7755,16 @@
 			(type default)
 		)
 		(uuid "069a1dde-71a3-4487-ba59-4a28682a95a9")
+	)
+	(wire
+		(pts
+			(xy 109.22 77.47) (xy 116.84 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06b3425c-ad06-43fe-8bfa-d7f6b5f7701f")
 	)
 	(wire
 		(pts
@@ -10643,6 +10968,16 @@
 	)
 	(wire
 		(pts
+			(xy 105.41 86.36) (xy 105.41 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e69c65a-5b13-4a86-bd08-5f60bafb1119")
+	)
+	(wire
+		(pts
 			(xy 546.1 219.71) (xy 546.1 212.09)
 		)
 		(stroke
@@ -10890,6 +11225,16 @@
 			(type default)
 		)
 		(uuid "3161d3ea-07f5-4129-9184-1769d0838383")
+	)
+	(wire
+		(pts
+			(xy 146.05 189.23) (xy 146.05 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "31879f52-2a3c-408e-9c97-bcdf5166cf12")
 	)
 	(wire
 		(pts
@@ -11753,6 +12098,16 @@
 	)
 	(wire
 		(pts
+			(xy 97.79 86.36) (xy 105.41 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a30fc0a-d82d-44b7-906a-469d9b0059a9")
+	)
+	(wire
+		(pts
 			(xy 350.52 227.33) (xy 332.74 227.33)
 		)
 		(stroke
@@ -12610,6 +12965,16 @@
 			(type default)
 		)
 		(uuid "4415fbde-7abe-4dfe-b327-20b419693e9c")
+	)
+	(wire
+		(pts
+			(xy 105.41 80.01) (xy 116.84 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44255a3f-fd76-450b-92d4-d28a1d95948d")
 	)
 	(wire
 		(pts
@@ -14053,6 +14418,16 @@
 	)
 	(wire
 		(pts
+			(xy 109.22 87.63) (xy 116.84 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "573dd345-cae7-4a4d-958f-7afb321b6c74")
+	)
+	(wire
+		(pts
 			(xy 314.96 288.29) (xy 297.18 288.29)
 		)
 		(stroke
@@ -14410,6 +14785,16 @@
 			(type default)
 		)
 		(uuid "5c426488-7ad4-4363-b4e4-eb8c01cb985e")
+	)
+	(wire
+		(pts
+			(xy 146.05 184.15) (xy 146.05 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c68b142-e1ec-414a-bfcf-9b11877b3a53")
 	)
 	(wire
 		(pts
@@ -14890,6 +15275,16 @@
 			(type default)
 		)
 		(uuid "619d5d79-dc96-496f-a368-7e621abb141a")
+	)
+	(wire
+		(pts
+			(xy 146.05 185.42) (xy 121.92 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61a1cf26-a3ad-4ec9-8cbf-c2fec7504ed7")
 	)
 	(wire
 		(pts
@@ -16140,6 +16535,16 @@
 			(type default)
 		)
 		(uuid "7077153b-36ed-4163-8116-5e307feaa5da")
+	)
+	(wire
+		(pts
+			(xy 109.22 73.66) (xy 109.22 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "70915916-2ff0-4f94-8bbb-c77a38b49a22")
 	)
 	(wire
 		(pts
@@ -18343,6 +18748,16 @@
 	)
 	(wire
 		(pts
+			(xy 97.79 78.74) (xy 105.41 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89c4a165-b660-4097-842c-eb4e28b5a9cf")
+	)
+	(wire
+		(pts
 			(xy 457.2 219.71) (xy 457.2 212.09)
 		)
 		(stroke
@@ -19163,6 +19578,16 @@
 	)
 	(wire
 		(pts
+			(xy 105.41 85.09) (xy 116.84 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9510cfc7-5192-4356-83e6-2dff3ed65a8e")
+	)
+	(wire
+		(pts
 			(xy 388.62 265.43) (xy 386.08 265.43)
 		)
 		(stroke
@@ -19570,6 +19995,16 @@
 			(type dot)
 		)
 		(uuid "9acb45c1-ad06-4c22-a979-1ea3070bd2bc")
+	)
+	(wire
+		(pts
+			(xy 109.22 90.17) (xy 109.22 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9acc59b0-9b1e-4f5d-8f9e-ec37b7f47a81")
 	)
 	(wire
 		(pts
@@ -20450,6 +20885,16 @@
 			(type default)
 		)
 		(uuid "a3b6da85-f286-44fb-8a8a-ab4e59eb1f9b")
+	)
+	(wire
+		(pts
+			(xy 146.05 184.15) (xy 147.32 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a3d0b8fb-4681-4b53-87f6-dd39122d62ec")
 	)
 	(wire
 		(pts
@@ -23273,6 +23718,16 @@
 	)
 	(wire
 		(pts
+			(xy 105.41 78.74) (xy 105.41 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9ef9465-487f-4ee6-aa44-30501721a650")
+	)
+	(wire
+		(pts
 			(xy 264.16 204.47) (xy 261.62 204.47)
 		)
 		(stroke
@@ -25653,6 +26108,16 @@
 	)
 	(wire
 		(pts
+			(xy 146.05 187.96) (xy 121.92 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e7ec55c2-8ec6-4ebb-848e-1fd454828c13")
+	)
+	(wire
+		(pts
 			(xy 85.09 140.97) (xy 85.09 152.4)
 		)
 		(stroke
@@ -26030,6 +26495,16 @@
 			(type dot)
 		)
 		(uuid "ed99582a-d7df-4e9d-a6f3-d898434d100f")
+	)
+	(wire
+		(pts
+			(xy 97.79 82.55) (xy 116.84 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "edd8226a-959d-4217-87db-aaa9765c87ff")
 	)
 	(wire
 		(pts
@@ -27933,6 +28408,28 @@
 			)
 		)
 	)
+	(global_label "SWDIO"
+		(shape input)
+		(at 97.79 78.74 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "055e3e37-44a7-4573-bcba-1a972f343b75")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 88.9386 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "CHRLY_18"
 		(shape input)
 		(at 215.9 303.53 180)
@@ -28034,6 +28531,28 @@
 		(uuid "28e77a76-a7e1-4de6-be5c-a0b5a80b3b22")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 42.6138 358.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "MCU_NRST"
+		(shape input)
+		(at 97.79 82.55 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2961cc94-2dad-4ed3-bd33-ea623df58a2a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 85.0077 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28215,6 +28734,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SWCLK"
+		(shape input)
+		(at 147.32 189.23 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "407ff43c-0932-48f3-9feb-67b5766e9ef2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 156.5342 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -28593,6 +29134,28 @@
 			)
 		)
 	)
+	(global_label "SWDIO"
+		(shape input)
+		(at 147.32 184.15 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a1be237d-0695-45be-9218-56b467b58aea")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 156.1714 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "CHRLY_13"
 		(shape input)
 		(at 215.9 227.33 180)
@@ -28879,6 +29442,28 @@
 			)
 		)
 	)
+	(global_label "SWCLK"
+		(shape input)
+		(at 97.79 86.36 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ef440011-9fc5-47a8-b2df-a3e6efc13a1b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 88.5758 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "BTN_SX_PIN"
 		(shape input)
 		(at 57.15 361.95 180)
@@ -29037,7 +29622,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 82.55 0)
 			(effects
 				(font
@@ -29114,7 +29699,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 295.91 0)
 			(effects
 				(font
@@ -29191,7 +29776,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 326.39 0)
 			(effects
 				(font
@@ -29268,7 +29853,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 113.03 0)
 			(effects
 				(font
@@ -29345,7 +29930,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 113.03 0)
 			(effects
 				(font
@@ -29422,7 +30007,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 158.75 0)
 			(effects
 				(font
@@ -29499,7 +30084,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 265.43 0)
 			(effects
 				(font
@@ -29576,7 +30161,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 204.47 0)
 			(effects
 				(font
@@ -29653,7 +30238,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 280.67 0)
 			(effects
 				(font
@@ -29730,7 +30315,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 67.31 0)
 			(effects
 				(font
@@ -29807,7 +30392,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 128.27 0)
 			(effects
 				(font
@@ -29884,7 +30469,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 158.75 0)
 			(effects
 				(font
@@ -29961,7 +30546,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 52.07 0)
 			(effects
 				(font
@@ -30038,7 +30623,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 234.95 0)
 			(effects
 				(font
@@ -30115,7 +30700,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 173.99 0)
 			(effects
 				(font
@@ -30192,7 +30777,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 82.55 0)
 			(effects
 				(font
@@ -30269,7 +30854,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 219.71 0)
 			(effects
 				(font
@@ -30346,7 +30931,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 113.03 0)
 			(effects
 				(font
@@ -30423,7 +31008,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 280.67 0)
 			(effects
 				(font
@@ -30500,7 +31085,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 311.15 0)
 			(effects
 				(font
@@ -30647,7 +31232,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 219.71 0)
 			(effects
 				(font
@@ -30724,7 +31309,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 82.55 0)
 			(effects
 				(font
@@ -30801,7 +31386,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 219.71 0)
 			(effects
 				(font
@@ -30878,7 +31463,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 189.23 0)
 			(effects
 				(font
@@ -30955,7 +31540,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 341.63 0)
 			(effects
 				(font
@@ -31032,7 +31617,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 97.79 0)
 			(effects
 				(font
@@ -31109,7 +31694,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 265.43 0)
 			(effects
 				(font
@@ -31252,7 +31837,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 280.67 0)
 			(effects
 				(font
@@ -31329,7 +31914,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 250.19 0)
 			(effects
 				(font
@@ -31406,7 +31991,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 219.71 0)
 			(effects
 				(font
@@ -31483,7 +32068,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 113.03 0)
 			(effects
 				(font
@@ -31560,7 +32145,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 280.67 0)
 			(effects
 				(font
@@ -31637,7 +32222,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 82.55 0)
 			(effects
 				(font
@@ -31714,7 +32299,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 82.55 0)
 			(effects
 				(font
@@ -31791,7 +32376,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 326.39 0)
 			(effects
 				(font
@@ -31868,7 +32453,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 219.71 0)
 			(effects
 				(font
@@ -31945,7 +32530,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 143.51 0)
 			(effects
 				(font
@@ -32022,7 +32607,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 143.51 0)
 			(effects
 				(font
@@ -32099,7 +32684,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 128.27 0)
 			(effects
 				(font
@@ -32176,7 +32761,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 173.99 0)
 			(effects
 				(font
@@ -32319,7 +32904,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 158.75 0)
 			(effects
 				(font
@@ -32396,7 +32981,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 158.75 0)
 			(effects
 				(font
@@ -32539,7 +33124,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 67.31 0)
 			(effects
 				(font
@@ -32616,7 +33201,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 219.71 0)
 			(effects
 				(font
@@ -32693,7 +33278,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 128.27 0)
 			(effects
 				(font
@@ -32770,7 +33355,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 265.43 0)
 			(effects
 				(font
@@ -32847,7 +33432,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 280.67 0)
 			(effects
 				(font
@@ -32924,7 +33509,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 173.99 0)
 			(effects
 				(font
@@ -33001,7 +33586,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 204.47 0)
 			(effects
 				(font
@@ -33144,7 +33729,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 67.31 0)
 			(effects
 				(font
@@ -33292,7 +33877,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 113.03 0)
 			(effects
 				(font
@@ -33369,7 +33954,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 97.79 0)
 			(effects
 				(font
@@ -33446,7 +34031,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 189.23 0)
 			(effects
 				(font
@@ -33523,7 +34108,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 311.15 0)
 			(effects
 				(font
@@ -33600,7 +34185,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 52.07 0)
 			(effects
 				(font
@@ -33677,7 +34262,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 341.63 0)
 			(effects
 				(font
@@ -33754,7 +34339,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 128.27 0)
 			(effects
 				(font
@@ -33831,7 +34416,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 295.91 0)
 			(effects
 				(font
@@ -33908,7 +34493,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 219.71 0)
 			(effects
 				(font
@@ -33985,7 +34570,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 311.15 0)
 			(effects
 				(font
@@ -34062,7 +34647,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 311.15 0)
 			(effects
 				(font
@@ -34139,7 +34724,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 97.79 0)
 			(effects
 				(font
@@ -34216,7 +34801,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 234.95 0)
 			(effects
 				(font
@@ -34293,7 +34878,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 52.07 0)
 			(effects
 				(font
@@ -34440,7 +35025,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 128.27 0)
 			(effects
 				(font
@@ -34517,7 +35102,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 128.27 0)
 			(effects
 				(font
@@ -34594,7 +35179,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 143.51 0)
 			(effects
 				(font
@@ -34671,7 +35256,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 67.31 0)
 			(effects
 				(font
@@ -34748,7 +35333,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 173.99 0)
 			(effects
 				(font
@@ -34825,7 +35410,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 158.75 0)
 			(effects
 				(font
@@ -34902,7 +35487,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 204.47 0)
 			(effects
 				(font
@@ -34979,7 +35564,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 128.27 0)
 			(effects
 				(font
@@ -35056,7 +35641,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 82.55 0)
 			(effects
 				(font
@@ -35133,7 +35718,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 113.03 0)
 			(effects
 				(font
@@ -35210,7 +35795,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 234.95 0)
 			(effects
 				(font
@@ -35287,7 +35872,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 173.99 0)
 			(effects
 				(font
@@ -35364,7 +35949,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 311.15 0)
 			(effects
 				(font
@@ -35441,7 +36026,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 97.79 0)
 			(effects
 				(font
@@ -35518,7 +36103,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 250.19 0)
 			(effects
 				(font
@@ -35595,7 +36180,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 341.63 0)
 			(effects
 				(font
@@ -35672,7 +36257,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 173.99 0)
 			(effects
 				(font
@@ -35749,7 +36334,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 326.39 0)
 			(effects
 				(font
@@ -35826,7 +36411,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 204.47 0)
 			(effects
 				(font
@@ -35903,7 +36488,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 219.71 0)
 			(effects
 				(font
@@ -35980,7 +36565,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 311.15 0)
 			(effects
 				(font
@@ -36057,7 +36642,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 311.15 0)
 			(effects
 				(font
@@ -36134,7 +36719,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 341.63 0)
 			(effects
 				(font
@@ -36211,7 +36796,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 189.23 0)
 			(effects
 				(font
@@ -36288,7 +36873,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 280.67 0)
 			(effects
 				(font
@@ -36365,7 +36950,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 113.03 0)
 			(effects
 				(font
@@ -36442,7 +37027,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 189.23 0)
 			(effects
 				(font
@@ -36519,7 +37104,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 250.19 0)
 			(effects
 				(font
@@ -36596,7 +37181,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 280.67 0)
 			(effects
 				(font
@@ -36673,7 +37258,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 311.15 0)
 			(effects
 				(font
@@ -36816,7 +37401,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 82.55 0)
 			(effects
 				(font
@@ -36893,7 +37478,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 97.79 0)
 			(effects
 				(font
@@ -36970,7 +37555,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 67.31 0)
 			(effects
 				(font
@@ -37047,7 +37632,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 82.55 0)
 			(effects
 				(font
@@ -37124,7 +37709,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 143.51 0)
 			(effects
 				(font
@@ -37201,7 +37786,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 311.15 0)
 			(effects
 				(font
@@ -37278,7 +37863,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 52.07 0)
 			(effects
 				(font
@@ -37423,7 +38008,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 265.43 0)
 			(effects
 				(font
@@ -37500,7 +38085,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 326.39 0)
 			(effects
 				(font
@@ -37577,7 +38162,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 113.03 0)
 			(effects
 				(font
@@ -37654,7 +38239,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 204.47 0)
 			(effects
 				(font
@@ -37731,7 +38316,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 265.43 0)
 			(effects
 				(font
@@ -37808,7 +38393,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 189.23 0)
 			(effects
 				(font
@@ -37885,7 +38470,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 204.47 0)
 			(effects
 				(font
@@ -37962,7 +38547,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 67.31 0)
 			(effects
 				(font
@@ -38039,7 +38624,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 67.31 0)
 			(effects
 				(font
@@ -38116,7 +38701,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 128.27 0)
 			(effects
 				(font
@@ -38193,7 +38778,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 128.27 0)
 			(effects
 				(font
@@ -38270,7 +38855,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 97.79 0)
 			(effects
 				(font
@@ -38347,7 +38932,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 234.95 0)
 			(effects
 				(font
@@ -38424,7 +39009,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 265.43 0)
 			(effects
 				(font
@@ -38501,7 +39086,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 326.39 0)
 			(effects
 				(font
@@ -38578,7 +39163,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 341.63 0)
 			(effects
 				(font
@@ -38655,7 +39240,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 158.75 0)
 			(effects
 				(font
@@ -38800,7 +39385,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 265.43 0)
 			(effects
 				(font
@@ -38947,7 +39532,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 341.63 0)
 			(effects
 				(font
@@ -39024,7 +39609,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 204.47 0)
 			(effects
 				(font
@@ -39101,7 +39686,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 52.07 0)
 			(effects
 				(font
@@ -39178,7 +39763,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 189.23 0)
 			(effects
 				(font
@@ -39255,7 +39840,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 113.03 0)
 			(effects
 				(font
@@ -39332,7 +39917,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 158.75 0)
 			(effects
 				(font
@@ -39409,7 +39994,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 295.91 0)
 			(effects
 				(font
@@ -39486,7 +40071,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 158.75 0)
 			(effects
 				(font
@@ -39563,7 +40148,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 326.39 0)
 			(effects
 				(font
@@ -39640,7 +40225,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 326.39 0)
 			(effects
 				(font
@@ -39717,7 +40302,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 67.31 0)
 			(effects
 				(font
@@ -39794,7 +40379,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 219.71 0)
 			(effects
 				(font
@@ -40007,7 +40592,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 219.71 0)
 			(effects
 				(font
@@ -40084,7 +40669,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 67.31 0)
 			(effects
 				(font
@@ -40161,7 +40746,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 143.51 0)
 			(effects
 				(font
@@ -40238,7 +40823,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 189.23 0)
 			(effects
 				(font
@@ -40315,7 +40900,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 128.27 0)
 			(effects
 				(font
@@ -40392,7 +40977,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 295.91 0)
 			(effects
 				(font
@@ -40469,7 +41054,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 97.79 0)
 			(effects
 				(font
@@ -40546,7 +41131,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 326.39 0)
 			(effects
 				(font
@@ -40623,7 +41208,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 265.43 0)
 			(effects
 				(font
@@ -40700,7 +41285,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 97.79 0)
 			(effects
 				(font
@@ -40777,7 +41362,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 82.55 0)
 			(effects
 				(font
@@ -40854,7 +41439,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 113.03 0)
 			(effects
 				(font
@@ -40931,7 +41516,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 128.27 0)
 			(effects
 				(font
@@ -41008,7 +41593,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 341.63 0)
 			(effects
 				(font
@@ -41085,7 +41670,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 128.27 0)
 			(effects
 				(font
@@ -41162,7 +41747,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 341.63 0)
 			(effects
 				(font
@@ -41308,7 +41893,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 234.95 0)
 			(effects
 				(font
@@ -41385,7 +41970,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 250.19 0)
 			(effects
 				(font
@@ -41533,7 +42118,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 52.07 0)
 			(effects
 				(font
@@ -41610,7 +42195,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 113.03 0)
 			(effects
 				(font
@@ -41687,7 +42272,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 52.07 0)
 			(effects
 				(font
@@ -41764,7 +42349,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 219.71 0)
 			(effects
 				(font
@@ -41909,7 +42494,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 265.43 0)
 			(effects
 				(font
@@ -41986,7 +42571,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 295.91 0)
 			(effects
 				(font
@@ -42063,7 +42648,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 143.51 0)
 			(effects
 				(font
@@ -42140,7 +42725,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 326.39 0)
 			(effects
 				(font
@@ -42217,7 +42802,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 173.99 0)
 			(effects
 				(font
@@ -42294,7 +42879,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 97.79 0)
 			(effects
 				(font
@@ -42371,7 +42956,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 250.19 0)
 			(effects
 				(font
@@ -42448,7 +43033,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 234.95 0)
 			(effects
 				(font
@@ -42525,7 +43110,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 189.23 0)
 			(effects
 				(font
@@ -42602,7 +43187,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 250.19 0)
 			(effects
 				(font
@@ -42679,7 +43264,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 113.03 0)
 			(effects
 				(font
@@ -42756,7 +43341,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 173.99 0)
 			(effects
 				(font
@@ -42833,7 +43418,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 265.43 0)
 			(effects
 				(font
@@ -42910,7 +43495,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 204.47 0)
 			(effects
 				(font
@@ -42987,7 +43572,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 67.31 0)
 			(effects
 				(font
@@ -43064,7 +43649,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 128.27 0)
 			(effects
 				(font
@@ -43141,7 +43726,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 341.63 0)
 			(effects
 				(font
@@ -43218,7 +43803,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 265.43 0)
 			(effects
 				(font
@@ -43295,7 +43880,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 158.75 0)
 			(effects
 				(font
@@ -43372,7 +43957,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 143.51 0)
 			(effects
 				(font
@@ -43449,7 +44034,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 204.47 0)
 			(effects
 				(font
@@ -43526,7 +44111,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 82.55 0)
 			(effects
 				(font
@@ -43671,7 +44256,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 189.23 0)
 			(effects
 				(font
@@ -43748,7 +44333,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 280.67 0)
 			(effects
 				(font
@@ -43825,7 +44410,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 250.19 0)
 			(effects
 				(font
@@ -43902,7 +44487,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 82.55 0)
 			(effects
 				(font
@@ -43979,7 +44564,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 234.95 0)
 			(effects
 				(font
@@ -44056,7 +44641,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 295.91 0)
 			(effects
 				(font
@@ -44133,7 +44718,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 311.15 0)
 			(effects
 				(font
@@ -44210,7 +44795,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 204.47 0)
 			(effects
 				(font
@@ -44287,7 +44872,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 52.07 0)
 			(effects
 				(font
@@ -44364,7 +44949,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 67.31 0)
 			(effects
 				(font
@@ -44441,7 +45026,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 250.19 0)
 			(effects
 				(font
@@ -44518,7 +45103,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 326.39 0)
 			(effects
 				(font
@@ -44595,7 +45180,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 311.15 0)
 			(effects
 				(font
@@ -44672,7 +45257,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 158.75 0)
 			(effects
 				(font
@@ -44749,7 +45334,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 128.27 0)
 			(effects
 				(font
@@ -44826,7 +45411,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 52.07 0)
 			(effects
 				(font
@@ -44971,7 +45556,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 82.55 0)
 			(effects
 				(font
@@ -45048,7 +45633,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 82.55 0)
 			(effects
 				(font
@@ -45263,7 +45848,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 82.55 0)
 			(effects
 				(font
@@ -45340,7 +45925,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 67.31 0)
 			(effects
 				(font
@@ -45417,7 +46002,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 265.43 0)
 			(effects
 				(font
@@ -45494,7 +46079,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 250.19 0)
 			(effects
 				(font
@@ -45571,7 +46156,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 219.71 0)
 			(effects
 				(font
@@ -45648,7 +46233,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 326.39 0)
 			(effects
 				(font
@@ -45725,7 +46310,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 295.91 0)
 			(effects
 				(font
@@ -45802,7 +46387,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 295.91 0)
 			(effects
 				(font
@@ -45879,7 +46464,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 158.75 0)
 			(effects
 				(font
@@ -45956,7 +46541,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 143.51 0)
 			(effects
 				(font
@@ -46033,7 +46618,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 265.43 0)
 			(effects
 				(font
@@ -46110,7 +46695,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 280.67 0)
 			(effects
 				(font
@@ -46187,7 +46772,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 173.99 0)
 			(effects
 				(font
@@ -46264,7 +46849,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 326.39 0)
 			(effects
 				(font
@@ -46341,7 +46926,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 67.31 0)
 			(effects
 				(font
@@ -46459,6 +47044,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Conn_01x05_Socket")
+		(at 121.92 82.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8b666387-2de7-4a34-9f38-b2884bea3a18")
+		(property "Reference" "J1"
+			(at 123.19 81.2799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x05_Socket"
+			(at 123.19 83.8199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x05_P2.54mm_Vertical"
+			(at 121.92 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 121.92 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x05, script generated"
+			(at 121.92 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "e1bc21b7-d115-441e-a2ff-b11978fe2b0a")
+		)
+		(pin "2"
+			(uuid "a0651e3f-71ca-405f-b583-bfb7f1432ebc")
+		)
+		(pin "5"
+			(uuid "bd1516a4-09b2-4f0a-aa13-0e09cfef9bba")
+		)
+		(pin "1"
+			(uuid "36c2f15d-777a-4b6f-88a5-038a9c8c7ed2")
+		)
+		(pin "3"
+			(uuid "69706144-1bf5-4eda-92cd-0a8186dc381e")
+		)
+		(instances
+			(project ""
+				(path "/4a81a2fe-e773-42b6-9fd6-b840e1554611"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 321.31 97.79 180)
 		(unit 1)
@@ -46484,7 +47148,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 97.79 0)
 			(effects
 				(font
@@ -46561,7 +47225,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 341.63 0)
 			(effects
 				(font
@@ -46638,7 +47302,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 295.91 0)
 			(effects
 				(font
@@ -46715,7 +47379,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 219.71 0)
 			(effects
 				(font
@@ -46792,7 +47456,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 250.19 0)
 			(effects
 				(font
@@ -46869,7 +47533,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 265.43 0)
 			(effects
 				(font
@@ -47014,7 +47678,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 189.23 0)
 			(effects
 				(font
@@ -47091,7 +47755,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 250.19 0)
 			(effects
 				(font
@@ -47236,7 +47900,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 173.99 0)
 			(effects
 				(font
@@ -47313,7 +47977,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 67.31 0)
 			(effects
 				(font
@@ -47390,7 +48054,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 158.75 0)
 			(effects
 				(font
@@ -47467,7 +48131,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 250.19 0)
 			(effects
 				(font
@@ -47544,7 +48208,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 52.07 0)
 			(effects
 				(font
@@ -47621,7 +48285,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 52.07 0)
 			(effects
 				(font
@@ -47698,7 +48362,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 173.99 0)
 			(effects
 				(font
@@ -47775,7 +48439,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 52.07 0)
 			(effects
 				(font
@@ -47852,7 +48516,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 280.67 0)
 			(effects
 				(font
@@ -47929,7 +48593,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 158.75 0)
 			(effects
 				(font
@@ -48006,7 +48670,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 189.23 0)
 			(effects
 				(font
@@ -48083,7 +48747,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 173.99 0)
 			(effects
 				(font
@@ -48160,7 +48824,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 280.67 0)
 			(effects
 				(font
@@ -48237,7 +48901,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 158.75 0)
 			(effects
 				(font
@@ -48314,7 +48978,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 326.39 0)
 			(effects
 				(font
@@ -48391,7 +49055,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 234.95 0)
 			(effects
 				(font
@@ -48468,7 +49132,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 341.63 0)
 			(effects
 				(font
@@ -48545,7 +49209,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 295.91 0)
 			(effects
 				(font
@@ -48622,7 +49286,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 204.47 0)
 			(effects
 				(font
@@ -48699,7 +49363,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 97.79 0)
 			(effects
 				(font
@@ -48776,7 +49440,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 265.43 0)
 			(effects
 				(font
@@ -48853,7 +49517,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 326.39 0)
 			(effects
 				(font
@@ -48930,7 +49594,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 341.63 0)
 			(effects
 				(font
@@ -49075,7 +49739,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 204.47 0)
 			(effects
 				(font
@@ -49152,7 +49816,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 67.31 0)
 			(effects
 				(font
@@ -49229,7 +49893,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 173.99 0)
 			(effects
 				(font
@@ -49306,7 +49970,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 341.63 0)
 			(effects
 				(font
@@ -49453,7 +50117,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 295.91 0)
 			(effects
 				(font
@@ -49530,7 +50194,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 82.55 0)
 			(effects
 				(font
@@ -49607,7 +50271,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 128.27 0)
 			(effects
 				(font
@@ -49684,7 +50348,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 295.91 0)
 			(effects
 				(font
@@ -49829,7 +50493,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 280.67 0)
 			(effects
 				(font
@@ -49906,7 +50570,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 234.95 0)
 			(effects
 				(font
@@ -49983,7 +50647,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 234.95 0)
 			(effects
 				(font
@@ -50128,7 +50792,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 295.91 0)
 			(effects
 				(font
@@ -50205,7 +50869,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 143.51 0)
 			(effects
 				(font
@@ -50282,7 +50946,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 143.51 0)
 			(effects
 				(font
@@ -50359,7 +51023,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 341.63 0)
 			(effects
 				(font
@@ -50637,7 +51301,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 326.39 0)
 			(effects
 				(font
@@ -50714,7 +51378,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 280.67 0)
 			(effects
 				(font
@@ -50791,7 +51455,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 97.79 0)
 			(effects
 				(font
@@ -50936,7 +51600,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 295.91 0)
 			(effects
 				(font
@@ -51013,7 +51677,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 173.99 0)
 			(effects
 				(font
@@ -51090,7 +51754,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 280.67 0)
 			(effects
 				(font
@@ -51167,7 +51831,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 82.55 0)
 			(effects
 				(font
@@ -51244,7 +51908,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 97.79 0)
 			(effects
 				(font
@@ -51321,7 +51985,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 52.07 0)
 			(effects
 				(font
@@ -51398,7 +52062,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 128.27 0)
 			(effects
 				(font
@@ -51475,7 +52139,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 52.07 0)
 			(effects
 				(font
@@ -51618,7 +52282,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 128.27 0)
 			(effects
 				(font
@@ -51695,7 +52359,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 234.95 0)
 			(effects
 				(font
@@ -51772,7 +52436,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 250.19 0)
 			(effects
 				(font
@@ -51849,7 +52513,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 67.31 0)
 			(effects
 				(font
@@ -51926,7 +52590,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 311.15 0)
 			(effects
 				(font
@@ -52069,7 +52733,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 158.75 0)
 			(effects
 				(font
@@ -52146,7 +52810,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 204.47 0)
 			(effects
 				(font
@@ -52223,7 +52887,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 311.15 0)
 			(effects
 				(font
@@ -52300,7 +52964,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 158.75 0)
 			(effects
 				(font
@@ -52586,7 +53250,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 113.03 0)
 			(effects
 				(font
@@ -52663,7 +53327,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 143.51 0)
 			(effects
 				(font
@@ -52740,7 +53404,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 143.51 0)
 			(effects
 				(font
@@ -52817,7 +53481,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 311.15 0)
 			(effects
 				(font
@@ -52894,7 +53558,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 82.55 0)
 			(effects
 				(font
@@ -52971,7 +53635,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 113.03 0)
 			(effects
 				(font
@@ -53048,7 +53712,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 189.23 0)
 			(effects
 				(font
@@ -53125,7 +53789,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 311.15 0)
 			(effects
 				(font
@@ -53202,7 +53866,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 219.71 0)
 			(effects
 				(font
@@ -53279,7 +53943,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 234.95 0)
 			(effects
 				(font
@@ -53356,7 +54020,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 234.95 0)
 			(effects
 				(font
@@ -53433,7 +54097,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 189.23 0)
 			(effects
 				(font
@@ -53510,7 +54174,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 143.51 0)
 			(effects
 				(font
@@ -53587,7 +54251,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 158.75 0)
 			(effects
 				(font
@@ -53732,7 +54396,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 97.79 0)
 			(effects
 				(font
@@ -53809,7 +54473,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 280.67 0)
 			(effects
 				(font
@@ -53886,7 +54550,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 295.91 0)
 			(effects
 				(font
@@ -53963,7 +54627,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 341.63 0)
 			(effects
 				(font
@@ -54040,7 +54704,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 173.99 0)
 			(effects
 				(font
@@ -54117,7 +54781,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 311.15 0)
 			(effects
 				(font
@@ -54194,7 +54858,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 189.23 0)
 			(effects
 				(font
@@ -54271,7 +54935,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 158.75 0)
 			(effects
 				(font
@@ -54348,7 +55012,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 97.79 0)
 			(effects
 				(font
@@ -54425,7 +55089,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 158.75 0)
 			(effects
 				(font
@@ -54502,7 +55166,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 280.67 0)
 			(effects
 				(font
@@ -54579,7 +55243,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 280.67 0)
 			(effects
 				(font
@@ -54656,7 +55320,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 143.51 0)
 			(effects
 				(font
@@ -54733,7 +55397,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 113.03 0)
 			(effects
 				(font
@@ -54810,7 +55474,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 189.23 0)
 			(effects
 				(font
@@ -55024,7 +55688,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 234.95 0)
 			(effects
 				(font
@@ -55101,7 +55765,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 250.19 0)
 			(effects
 				(font
@@ -55178,7 +55842,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 128.27 0)
 			(effects
 				(font
@@ -55255,7 +55919,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 265.43 0)
 			(effects
 				(font
@@ -55332,7 +55996,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 204.47 0)
 			(effects
 				(font
@@ -55409,7 +56073,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 250.19 0)
 			(effects
 				(font
@@ -55486,7 +56150,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 250.19 0)
 			(effects
 				(font
@@ -55563,7 +56227,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 113.03 0)
 			(effects
 				(font
@@ -55706,7 +56370,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 265.43 0)
 			(effects
 				(font
@@ -55853,7 +56517,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 250.19 326.39 0)
 			(effects
 				(font
@@ -55930,7 +56594,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 219.71 0)
 			(effects
 				(font
@@ -56007,7 +56671,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 295.91 0)
 			(effects
 				(font
@@ -56084,7 +56748,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 173.99 0)
 			(effects
 				(font
@@ -56161,7 +56825,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 234.95 0)
 			(effects
 				(font
@@ -56238,7 +56902,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 234.95 0)
 			(effects
 				(font
@@ -56315,7 +56979,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 232.41 219.71 0)
 			(effects
 				(font
@@ -56392,7 +57056,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 173.99 0)
 			(effects
 				(font
@@ -56444,6 +57108,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 109.22 90.17 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d5fbc9bf-128a-4a5b-bc88-518608a5c10a")
+		(property "Reference" "#PWR012"
+			(at 109.22 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 109.22 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 109.22 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "94c7b79e-4d27-410f-be06-24b64d78d0b0")
+		)
+		(instances
+			(project ""
+				(path "/4a81a2fe-e773-42b6-9fd6-b840e1554611"
+					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 445.77 341.63 180)
 		(unit 1)
@@ -56469,7 +57199,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 341.63 0)
 			(effects
 				(font
@@ -56546,7 +57276,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 295.91 0)
 			(effects
 				(font
@@ -56623,7 +57353,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 295.91 0)
 			(effects
 				(font
@@ -56770,7 +57500,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 189.23 0)
 			(effects
 				(font
@@ -56847,7 +57577,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 234.95 0)
 			(effects
 				(font
@@ -56924,7 +57654,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 143.51 0)
 			(effects
 				(font
@@ -57001,7 +57731,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 52.07 0)
 			(effects
 				(font
@@ -57078,7 +57808,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 341.63 0)
 			(effects
 				(font
@@ -57155,7 +57885,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 97.79 0)
 			(effects
 				(font
@@ -57232,7 +57962,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 280.67 0)
 			(effects
 				(font
@@ -57309,7 +58039,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 143.51 0)
 			(effects
 				(font
@@ -57386,7 +58116,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 143.51 0)
 			(effects
 				(font
@@ -57463,7 +58193,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 326.39 0)
 			(effects
 				(font
@@ -57608,7 +58338,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 67.31 0)
 			(effects
 				(font
@@ -57685,7 +58415,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 143.51 0)
 			(effects
 				(font
@@ -57762,7 +58492,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 265.43 0)
 			(effects
 				(font
@@ -57839,7 +58569,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 326.39 0)
 			(effects
 				(font
@@ -57984,7 +58714,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 311.15 0)
 			(effects
 				(font
@@ -58061,7 +58791,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 82.55 0)
 			(effects
 				(font
@@ -58138,7 +58868,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 189.23 0)
 			(effects
 				(font
@@ -58215,7 +58945,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 204.47 0)
 			(effects
 				(font
@@ -58292,7 +59022,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 250.19 0)
 			(effects
 				(font
@@ -58369,7 +59099,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 326.39 0)
 			(effects
 				(font
@@ -58446,7 +59176,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 267.97 265.43 0)
 			(effects
 				(font
@@ -58523,7 +59253,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 219.71 0)
 			(effects
 				(font
@@ -58600,7 +59330,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 82.55 0)
 			(effects
 				(font
@@ -58677,7 +59407,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 204.47 0)
 			(effects
 				(font
@@ -58754,7 +59484,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 204.47 0)
 			(effects
 				(font
@@ -58831,7 +59561,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 52.07 0)
 			(effects
 				(font
@@ -58976,7 +59706,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 339.09 67.31 0)
 			(effects
 				(font
@@ -59053,7 +59783,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 204.47 0)
 			(effects
 				(font
@@ -59198,7 +59928,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 219.71 0)
 			(effects
 				(font
@@ -59275,7 +60005,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 280.67 0)
 			(effects
 				(font
@@ -59352,7 +60082,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 97.79 0)
 			(effects
 				(font
@@ -59497,7 +60227,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 234.95 0)
 			(effects
 				(font
@@ -59574,7 +60304,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 128.27 0)
 			(effects
 				(font
@@ -59651,7 +60381,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 463.55 52.07 0)
 			(effects
 				(font
@@ -59728,7 +60458,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 341.63 0)
 			(effects
 				(font
@@ -59946,7 +60676,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 374.65 189.23 0)
 			(effects
 				(font
@@ -60023,7 +60753,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 250.19 0)
 			(effects
 				(font
@@ -60100,7 +60830,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 295.91 0)
 			(effects
 				(font
@@ -60177,7 +60907,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 481.33 143.51 0)
 			(effects
 				(font
@@ -60254,7 +60984,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 427.99 97.79 0)
 			(effects
 				(font
@@ -60331,7 +61061,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 234.95 0)
 			(effects
 				(font
@@ -60408,7 +61138,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 410.21 67.31 0)
 			(effects
 				(font
@@ -60485,7 +61215,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 311.15 0)
 			(effects
 				(font
@@ -60562,7 +61292,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 534.67 219.71 0)
 			(effects
 				(font
@@ -60639,7 +61369,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 445.77 52.07 0)
 			(effects
 				(font
@@ -60716,7 +61446,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 321.31 52.07 0)
 			(effects
 				(font
@@ -60793,7 +61523,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 204.47 0)
 			(effects
 				(font
@@ -60870,7 +61600,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 570.23 113.03 0)
 			(effects
 				(font
@@ -60947,7 +61677,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 173.99 0)
 			(effects
 				(font
@@ -61024,7 +61754,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 285.75 189.23 0)
 			(effects
 				(font
@@ -61101,7 +61831,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 392.43 113.03 0)
 			(effects
 				(font
@@ -61178,7 +61908,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 311.15 0)
 			(effects
 				(font
@@ -61255,7 +61985,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 552.45 250.19 0)
 			(effects
 				(font
@@ -61332,7 +62062,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 356.87 113.03 0)
 			(effects
 				(font
@@ -61384,6 +62114,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:VDD")
+		(at 109.22 73.66 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fd1af496-2d44-4c5c-af43-d9e4a80cfd21")
+		(property "Reference" "#PWR011"
+			(at 109.22 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VDD"
+			(at 109.22 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VDD\""
+			(at 109.22 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "34924545-085b-4967-8cf1-805933532d1e")
+		)
+		(instances
+			(project "Yet_Another_Business_Card"
+				(path "/4a81a2fe-e773-42b6-9fd6-b840e1554611"
+					(reference "#PWR011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:LED")
 		(at 303.53 97.79 180)
 		(unit 1)
@@ -61409,7 +62205,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 303.53 97.79 0)
 			(effects
 				(font
@@ -61486,7 +62282,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 499.11 341.63 0)
 			(effects
 				(font
@@ -61563,7 +62359,7 @@
 				)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "Business_card_footprints:LED_0603_no_silkscreen"
 			(at 516.89 173.99 0)
 			(effects
 				(font
