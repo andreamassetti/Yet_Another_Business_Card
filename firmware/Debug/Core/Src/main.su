@@ -1,0 +1,15 @@
+../Core/Src/main.c:106:6:enable_gpio_clocks	4	static
+../Core/Src/main.c:119:6:set_pin_input	24	static
+../Core/Src/main.c:134:6:set_pin_output	24	static
+../Core/Src/main.c:149:6:set_pin_high	16	static
+../Core/Src/main.c:156:6:set_pin_low	16	static
+../Core/Src/main.c:168:6:set_all_pins_input	16	static
+../Core/Src/main.c:179:6:light_led	32	static
+../Core/Src/main.c:210:6:crude_delay_ms	24	static,ignoring_inline_asm
+../Core/Src/main.c:222:6:test_all_leds	16	static
+../Core/Src/main.c:255:6:DWT_Delay_Init	4	static
+../Core/Src/main.c:270:6:DWT_Delay_us	32	static
+../Core/Src/main.c:285:6:light_all_leds_pov	24	static
+../Core/Src/main.c:325:5:main	8	static
+../Core/Src/main.c:371:6:SystemClock_Config	72	static
+../Core/Src/main.c:413:6:Error_Handler	4	static,ignoring_inline_asm
