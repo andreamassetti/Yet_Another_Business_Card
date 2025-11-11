@@ -1,0 +1,14 @@
+../Core/Src/main.c:89:5:main	1
+../Core/Src/main.c:242:6:SystemClock_Config	3
+../Core/Src/main.c:281:13:MX_TIM1_Init	4
+../Core/Src/main.c:327:13:MX_GPIO_Init	1
+../Core/Src/main.c:405:6:initBitDurationLUT	2
+../Core/Src/main.c:440:6:HAL_TIM_PeriodElapsedCallback	3
+../Core/Src/main.c:469:6:setLeds	2
+../Core/Src/main.c:484:6:convertRowToRegisters	3
+../Core/Src/main.c:650:6:convertArrayToRegistersA	7
+../Core/Src/main.c:676:6:convertArrayToRegistersB	7
+../Core/Src/main.c:702:6:convertArrayToRegistersC	7
+../Core/Src/main.c:728:6:convertArrayToRegistersD	7
+../Core/Src/main.c:754:6:writeRegisters	1
+../Core/Src/main.c:781:6:Error_Handler	1

@@ -22,14 +22,20 @@ class GifProcessor:
         self.processed_frames = [] # List of 48-byte lists (one for each frame)
         self.num_frames = 0
         self.gif_path = None
+        
+        # --- NEW ---
+        # Stores the 20x19 grayscale ('L') frames, loaded only once
+        self.original_grayscale_frames = []
 
-    def process_gif(self, file_path, threshold=128):
+    # --- NEW METHOD ---
+    def load_gif(self, file_path):
         """
-        Loads a GIF, resizes/dithers frames to 20x19, and converts them
-        into the STM32 bitmap array format.
+        Loads a GIF and does the one-time slow part: resizing all frames
+        to 20x19 grayscale.
         """
         self.gif_path = file_path
-        self.processed_frames = []
+        self.original_grayscale_frames = [] # Clear previous
+        self.processed_frames = []          # Clear previous
         
         try:
             img = Image.open(file_path)
@@ -37,26 +43,49 @@ class GifProcessor:
             messagebox.showerror("Error", f"Could not load GIF: {e}")
             return False
 
-        # --- 1. Frame Extraction and Dithering ---
-        original_frames = []
-        total_gif_duration = 0
-
+        # --- 1. Frame Extraction and Resizing (Slow Part) ---
         for frame in ImageSequence.Iterator(img):
-            # Convert to grayscale, resize/crop, and binarize
-            
             # Step 1: Convert to grayscale and resize/crop
-            # We use LANCZOS for high-quality downscaling
             resized_frame = frame.convert('L').resize((MATRIX_WIDTH, MATRIX_HEIGHT), Image.Resampling.LANCZOS)
             
-            # Step 2: Binarization (Thresholding)
-            # Dithering is often better for low-res, but simple thresholding is often faster/cleaner
-            binary_frame = resized_frame.point(lambda p: 255 if p > threshold else 0, mode='1')
-
-            # Extract data: 0 (black/off) or 1 (white/on)
-            frame_data = list(binary_frame.getdata())
-            
-            # Get GIF duration, default to 100ms if not present
+            # Step 2: Get duration
             duration_ms = frame.info.get('duration', 100)
+            
+            # Step 3: Store the pre-processed frame
+            self.original_grayscale_frames.append({
+                'image': resized_frame,
+                'duration': duration_ms
+            })
+
+        if not self.original_grayscale_frames:
+            messagebox.showerror("Error", "No frames found in GIF.")
+            return False
+            
+        return True
+
+
+    # --- MODIFIED METHOD (was process_gif) ---
+    def process_frames(self, threshold=128):
+        """
+        Applies thresholding and frame-rate matching to the already-loaded
+        grayscale frames. This is the FAST part.
+        """
+        self.processed_frames = []
+        if not self.original_grayscale_frames:
+            messagebox.showerror("Error", "No GIF loaded. Load a GIF first.")
+            return False
+
+        # --- 1. Apply Threshold (Fast) ---
+        original_frames = [] # This now holds binarized (0/1) data
+        total_gif_duration = 0
+
+        for frame_info in self.original_grayscale_frames:
+            resized_frame = frame_info['image']
+            duration_ms = frame_info['duration']
+            
+            # Apply binarization (thresholding)
+            binary_frame = resized_frame.point(lambda p: 255 if p > threshold else 0, mode='1')
+            frame_data = list(binary_frame.getdata())
             
             original_frames.append({
                 'data': frame_data,
@@ -68,104 +97,61 @@ class GifProcessor:
             messagebox.showerror("Error", "No frames found in GIF.")
             return False
 
-        # --- 2. Frame Rate Matching (Temporal Scaling) ---
+        # --- 2. Frame Rate Matching (Fast) ---
         
-        # Calculate how many target frames (at 50ms) are needed for the GIF's total duration
         total_target_frames = round(total_gif_duration / FRAME_DURATION_MS)
         if total_target_frames == 0:
-            total_target_frames = 1 # At least one frame
+            total_target_frames = 1
 
-        frame_index = 0
-        current_time_ms = 0
-        
-        # A running index for frames we have added to the final sequence
-        target_frame_count = 0
-        
-        # Ensure we don't exceed the total number of frames calculated,
-        # which prevents endless loops from float precision errors.
+        # This outer loop structure is weird, but the `break` at the end
+        # makes it run only once, which is correct for this logic.
+        target_frame_count = 0 
         while target_frame_count < total_target_frames:
-            if frame_index >= len(original_frames):
-                # Loop the original GIF if needed to fill the time.
-                frame_index = 0
-                
-            if frame_index >= len(original_frames):
-                break # Should not happen if original_frames is not empty
-
-
             
-            # Instead of complex time interpolation, let's use a simpler, more robust method:
-            # Distribute the GIF's frames over the target time slots.
-            
-            # Calculate the ratio of the GIF's frame rate to the target frame rate (20 FPS)
-            # This is complex due to variable GIF frame rates. Let's use the simple slot method:
-
-            
-            # Simple Frame Duplication Strategy:
-            # 1. Total time: total_gif_duration
-            # 2. Total target frames: total_target_frames
-            # 3. Time per target frame: 50ms
-            
-            # We want to map original_frames[i] to a sequence of target frames.
-            
-            # Simple resampling logic (resets the frames list)
+            # Simple resampling logic
             target_frames = []
             
-            # We use a simple counter to approximate the frame rate matching
-            cumulative_duration = 0
+            # --- This is the corrected resampling logic from last time ---
+            current_gif_time = 0
             original_frame_idx = 0
             
-            # Iterate through the desired number of 50ms slots
             for i in range(total_target_frames):
-                # The duration elapsed in the target sequence
                 target_elapsed_ms = i * FRAME_DURATION_MS
                 
-                # Check if we need to advance the original GIF frame
-                # This ensures that the current GIF frame is repeated until its duration is covered
-                while cumulative_duration <= target_elapsed_ms and original_frame_idx < len(original_frames) - 1:
-                    cumulative_duration += original_frames[original_frame_idx]['duration']
-                    if cumulative_duration <= target_elapsed_ms:
-                        original_frame_idx += 1
+                while (current_gif_time + original_frames[original_frame_idx]['duration']) <= target_elapsed_ms and \
+                      original_frame_idx < len(original_frames) - 1:
+                    
+                    current_gif_time += original_frames[original_frame_idx]['duration']
+                    original_frame_idx += 1
                         
-                # Add the currently active original frame data to the target frames list
                 target_frames.append(original_frames[original_frame_idx]['data'])
-                
             
             if not target_frames:
                 messagebox.showerror("Error", "Frame resampling failed.")
                 return False
                 
-            # --- 3. Convert Pixels to Bitmap Array ---
+            # --- 3. Convert Pixels to Bitmap Array (Fast) ---
             for frame_data in target_frames:
                 bitmap_bytes = bytearray(BYTES_PER_FRAME)
                 
                 for i in range(TOTAL_LEDS):
-                    # Pixel index i corresponds to LED index i
                     pixel_value = frame_data[i] 
-                    
-                    if pixel_value > 0: # Pixel is "on" (white)
+                    if pixel_value > 0:
                         byte_index = i // 8
                         bit_index = i % 8
-                        
-                        # Set the corresponding bit
                         bitmap_bytes[byte_index] |= (1 << bit_index)
                 
                 self.processed_frames.append(list(bitmap_bytes))
 
             self.num_frames = len(self.processed_frames)
-            # Since the resampling logic above handles all frames, we can break out.
-            # The structure for `target_frames` replaces the simpler loop.
-            break 
+            break # Exit the 'while' loop
             
         if not self.processed_frames:
             messagebox.showerror("Error", "Failed to process any frames.")
             return False
             
-        # Update the C code's expected constants based on the actual frame count
-        # (This is informative for the user)
         self.video_num_frames = self.num_frames
-        
         return True
-
 
     def get_frame(self, index):
         """Returns the 380-bit frame data (as a 20x19 list of 0s/1s) for simulation."""
@@ -177,11 +163,9 @@ class GifProcessor:
         for byte_idx, byte in enumerate(frame_bytes):
             for bit_idx in range(8):
                 if len(frame_data) < TOTAL_LEDS:
-                    # Check if the bit is set
                     is_on = (byte >> bit_idx) & 1
                     frame_data.append(is_on)
         return frame_data
-
 
     def generate_c_array(self):
         """Generates the C code representation of the video_frames array."""
@@ -311,22 +295,37 @@ class SimulatorApp(tk.Tk):
             return
 
         self.gif_path = file_path
-        self.process_and_update_ui()
-
+        
+        # --- MODIFIED ---
+        # Run the one-time SLOW loading process
+        self.status_var.set("Status: Loading GIF...")
+        self.update()
+        
+        if self.processor.load_gif(self.gif_path):
+            # Now run the FAST processing and update the UI
+            self.process_and_update_ui()
+        else:
+            self.gif_path = None # Failed to load
+            self.status_var.set("Status: Failed to load/process GIF.")
+            self.sim_btn.config(state=tk.DISABLED, text="Start Simulation")
+            self.draw_empty_matrix()
     def on_threshold_change(self, value):
         if self.gif_path:
             self.process_and_update_ui()
 
     def process_and_update_ui(self):
-        """Helper function to run processing and update the GUI."""
+        """Helper function to run FAST processing and update the GUI."""
         if not self.gif_path:
             return
 
-        self.status_var.set("Status: Processing GIF...")
+        # --- MODIFIED ---
+        # This is now the FAST part
+        self.status_var.set("Status: Processing frames...")
         self.update()
 
         threshold = self.threshold_var.get()
-        if self.processor.process_gif(self.gif_path, threshold):
+        # Call the new, FAST process_frames method
+        if self.processor.process_frames(threshold):
             self.current_frame_index = 0
             self.toggle_simulation(run=False) # Stop simulation if running
             
@@ -342,7 +341,7 @@ class SimulatorApp(tk.Tk):
             self.sim_btn.config(state=tk.NORMAL, text="Start Simulation")
             self.draw_frame(self.current_frame_index)
         else:
-            self.status_var.set("Status: Failed to load/process GIF.")
+            self.status_var.set("Status: Failed to process frames.")
             self.sim_btn.config(state=tk.DISABLED, text="Start Simulation")
             self.draw_empty_matrix()
 
