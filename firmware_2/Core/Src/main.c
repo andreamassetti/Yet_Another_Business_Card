@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "animations.h" // <--- Add this
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +33,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TICK_DELAY 0x10
+#define TICK_DELAY 0x3
 #define COLOR_DEPTH 1
 #define COLOR_COUNT (1 << COLOR_DEPTH)
 #define COLOR_MAX (COLOR_COUNT - 1)
@@ -44,6 +46,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 
@@ -54,9 +57,36 @@ uint8_t frameBuffer[yres * xres];
 
 volatile int frame = 0;
 
+volatile int current_frame_idx = 0;
+
 // uint32_t matrix_level_0[] = {349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762};
 // uint32_t matrix_level_1[] = {349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0};
 // uint32_t matrix_level_1[] = {262145, 131074, 65540, 32776, 16400, 8224, 4160, 2176, 1280, 512, 1280, 2176, 4160, 8224, 16400, 32776, 65540, 131074, 262145, 262145};
+
+
+uint32_t matrix_greyscale[20][19] = {
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7},
+	{0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x075, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA, 0xF7}
+};
+
 
 /* C-style array: 19x20 Matrix */
 uint32_t matrix_level_0[20] = {
@@ -84,59 +114,55 @@ uint32_t matrix_level_0[20] = {
 uint32_t matrix_level_1[20];
 
 uint32_t frame_0[20] = {
-		0x00004020, /* Row  0 */
-		0x00008990, /* Row  1 */
-		0x000198D8, /* Row  2 */
-		0x0003336C, /* Row  3 */
-		0x000225A4, /* Row  4 */
-		0x00026CA6, /* Row  5 */
-		0x000248B2, /* Row  6 */
-		0x00064A93, /* Row  7 */
-		0x0004CAD1, /* Row  8 */
-		0x00049A51, /* Row  9 */
-		0x00049251, /* Row 10 */
-		0x00059253, /* Row 11 */
-		0x00051252, /* Row 12 */
-		0x00051256, /* Row 13 */
-		0x00049054, /* Row 14 */
-		0x0006D8D4, /* Row 15 */
-		0x00036C94, /* Row 16 */
-		0x000127B4, /* Row 17 */
-		0x0000B06C, /* Row 18 */
-		0x00009848, /* Row 19 */
+	0x00000000, /* Row  0 */
+    0x0003FFFC, /* Row  1 */
+    0x00020604, /* Row  2 */
+    0x00020604, /* Row  3 */
+    0x00020604, /* Row  4 */
+    0x00020604, /* Row  5 */
+    0x00020604, /* Row  6 */
+    0x00020604, /* Row  7 */
+    0x0003FFFC, /* Row  8 */
+    0x0003FFFC, /* Row  9 */
+    0x00020604, /* Row 10 */
+    0x00020604, /* Row 11 */
+    0x00020604, /* Row 12 */
+    0x00020604, /* Row 13 */
+    0x00020604, /* Row 14 */
+    0x00020604, /* Row 15 */
+    0x00020604, /* Row 16 */
+    0x0003FFFC, /* Row 17 */
+    0x0003FFFC, /* Row 18 */
+    0x0003FFFC, /* Row 19 */
 };
 
 uint32_t frame_1[20] = {
-		0x000322E3, /* Row  0 */
-		0x00026721, /* Row  1 */
-		0x00064DB1, /* Row  2 */
-		0x0004DC98, /* Row  3 */
-		0x00049AC8, /* Row  4 */
-		0x0005B24C, /* Row  5 */
-		0x00013744, /* Row  6 */
-		0x00032524, /* Row  7 */
-		0x00012524, /* Row  8 */
-		0x00012524, /* Row  9 */
-		0x000125A4, /* Row 10 */
-		0x000124A4, /* Row 11 */
-		0x000125A4, /* Row 12 */
-		0x00012726, /* Row 13 */
-		0x00012322, /* Row 14 */
-		0x0001B222, /* Row 15 */
-		0x0001B064, /* Row 16 */
-		0x0000D84C, /* Row 17 */
-		0x00044CC8, /* Row 18 */
-		0x00066C98, /* Row 19 */
+	0x00000000, /* Row  0 */
+    0x0003FFFC, /* Row  1 */
+    0x0003FFFC, /* Row  2 */
+    0x0003FFFC, /* Row  3 */
+    0x0003C63C, /* Row  4 */
+    0x0003A65C, /* Row  5 */
+    0x0003969C, /* Row  6 */
+    0x00038F1C, /* Row  7 */
+    0x0003FFFC, /* Row  8 */
+    0x0003FFFC, /* Row  9 */
+    0x0003861C, /* Row 10 */
+    0x00038F1C, /* Row 11 */
+    0x0003969C, /* Row 12 */
+    0x0003A65C, /* Row 13 */
+    0x0003C63C, /* Row 14 */
+    0x0003FFFC, /* Row 15 */
+    0x0003FFFC, /* Row 16 */
+    0x0003FFFC, /* Row 17 */
+    0x0003FFFC, /* Row 18 */
+    0x0003FFFC, /* Row 19 */
 };
 
-uint32_t frame_2[20] = {
+uint32_t rowData = 0;
 
-};
-
-uint32_t frame_3[20] = {
-
-};
-
+volatile uint8_t system_active = 1; // Flag to track if we are awake
+uint32_t last_activity_time = 0;    // Timer to track the 10 seconds
 
 uint32_t reg_GPIOA_CRL, reg_GPIOB_CRL, reg_GPIOC_CRL, reg_GPIOD_CRL;
 uint32_t reg_GPIOA_CRH, reg_GPIOB_CRH, reg_GPIOC_CRH, reg_GPIOD_CRH;
@@ -148,6 +174,7 @@ uint16_t reg_GPIOA_ODR, reg_GPIOB_ODR, reg_GPIOC_ODR, reg_GPIOD_ODR;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 void convertRowToRegisters(uint8_t rowIndex, uint32_t rowArray);
@@ -198,17 +225,93 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  // --- Example: Populate the frameBuffer with a test pattern ---
+
+	// // 1. Clear the entire buffer to Level 0 (Off)
+	// for (int i = 0; i < (yres * xres); i++) {
+	// 		frameBuffer[i] = 0;
+	// }
+
+	// // 2. Draw a diagonal line with increasing brightness (0, 1, 2, 3)
+	// for (int i = 0; i < yres && i < xres; i++) {
+	// 		// Set pixel at (row i, col i)
+	// 		// Brightness loops: 0, 1, 2, 3, 0, 1, 2, 3...
+	// 		frameBuffer[i * xres + i] = (i % COLOR_COUNT);
+	// }
+
+	// // 3. Draw a static horizontal line at row 5 with medium brightness (Level 2)
+	// for (int x = 0; x < xres; x++) {
+	// 		frameBuffer[5 * xres + x] = 2;
+	// }
+
+	// // 4. Draw a static vertical line at col 2 with dim brightness (Level 1)
+	// for (int y = 0; y < yres; y++) {
+	// 		frameBuffer[y * xres + 2] = 1;
+	// }
+
   HAL_TIM_Base_Start_IT(&htim1);
+	HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int delay = 0;
-  while (1)
-  {
+  // int delay = 0;
+  last_activity_time = HAL_GetTick(); // Reset timer on startup
+  
+  while(1){
+		// 1. Check if 10 seconds (10000 ms) have passed
+		if(system_active && (HAL_GetTick() - last_activity_time > 10000)){
+			system_active = 0; // Time to sleep
+		}
+
+		if(system_active){
+			// --- ACTIVE STATE ---
+			// Ensure Timer is running for LEDs
+			if (htim1.State != HAL_TIM_STATE_BUSY) {
+				HAL_TIM_Base_Start_IT(&htim1);
+				HAL_TIM_Base_Start_IT(&htim2);
+			}
+			
+			// If button is pressed while running, reset the 10s timer
+			if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET) {
+				last_activity_time = HAL_GetTick();
+			}
+		} else {
+			// --- SLEEP PREPARATION ---
+			
+			// 1. Stop the LED Timer (Crucial: prevents interrupts waking cpu)
+			HAL_TIM_Base_Stop_IT(&htim1);
+			HAL_TIM_Base_Stop_IT(&htim2);
+
+			// 2. TURN OFF ALL LEDs (Crucial: prevents battery drain)
+			// Based on your 'writeRegisters' logic, we can force ODR to 0.
+			// (We modify the shadow registers you created)
+			reg_GPIOA_ODR = 0;
+			reg_GPIOB_ODR = 0;
+			reg_GPIOC_ODR = 0;
+			reg_GPIOD_ODR = 0;
+			writeRegisters(); // Apply the "All Off" state
+
+			// 3. Enter STOP Mode
+			// The CPU will halt here until PB12 is pressed
+			HAL_SuspendTick();
+			HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+
+			// --- WAKE UP SEQUENCE ---
+			// The code resumes here immediately after the button press interrupt
+			
+			SystemClock_Config();  // Reconfigure system clocks
+			HAL_ResumeTick();      // Resume SysTick
+
+
+			// 5. Reset logic to run again
+			system_active = 1;
+			last_activity_time = HAL_GetTick();
+		}
   	// turn_on_all_LEDs_FAST();
 
     /* USER CODE END WHILE */
@@ -247,8 +350,8 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
@@ -275,9 +378,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 999;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 2;
+  htim1.Init.Period = 8;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -299,6 +402,51 @@ static void MX_TIM1_Init(void)
   /* USER CODE BEGIN TIM1_Init 2 */
 
   /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 3999;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 20;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
 
 }
 
@@ -371,12 +519,16 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PB12 */
   GPIO_InitStruct.Pin = GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure peripheral I/O remapping */
   __HAL_AFIO_REMAP_PD01_ENABLE();
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -385,45 +537,84 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+/**
+  * @brief  Constructs a 32-bit row bitmask for a specific bit-plane.
+  * @param  rowIndex: The row index (0-19) to get data for.
+  * @param  bitPlane: The bit-plane (0 for LSB, 1 for MSB, etc.)
+  * @retval uint32_t: A bitmask where bit 'x' is set if the pixel (row, x)
+  * has that bit-plane's bit set in its brightness value.
+  */
+uint32_t getRowDataFromFrameBuffer(int rowIndex, int bitPlane)
+{
+	uint32_t rowData = 0;
+
+	// Calculate the starting index in the 1D frameBuffer for this row
+	int rowOffset = rowIndex * xres;
+
+	// Iterate through each pixel (column) in this row
+	for (int x = 0; x < xres; x++)
+	{
+		// 1. Get the 8-bit brightness value for this pixel
+		//    (This value will be 0, 1, 2, or 3)
+		uint8_t brightness = frameBuffer[rowOffset + x];
+
+		// 2. Extract the specific bit for the current bit-plane
+		//    (brightness >> 0) & 1  -> gets bit 0
+		//    (brightness >> 1) & 1  -> gets bit 1
+		uint8_t pixelBit = (brightness >> bitPlane) & 1;
+
+		// 3. If that bit is 1, set the corresponding bit in our rowData mask
+		//    (This creates the 32-bit mask setLeds() expects)
+		if (pixelBit)
+		{
+			rowData |= (1 << x);
+		}
+	}
+
+	return rowData;
+}
+
 void initBitDurationLUT(void){
 	for(uint32_t i = 0; i < COLOR_DEPTH; i++){
-		int dur = (1 << i);
-		bitDuration[i] = TICK_DELAY * (dur + 1);
+		int dur = (1 << i); // 1, 2, 4, 8...
+		bitDuration[i] = TICK_DELAY * dur; // Correct BCM duration
 	}
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
 	static int row = 0;
 	static int bit = 0;
-	static int frame_counter = 0;
-	static int frame_index = 0;
 
-	if(frame_index == 0){
-		setLeds(row, frame_0[row]);
-	}
-	if(frame_index == 1){
-		setLeds(row, frame_1[row]);
-	}
+	if(htim->Instance == TIM1){
 
-	row++;
-	if(row == yres)
-	{
-		row = 0;
-		frame_counter++;
-		bit++;
-		if(bit == COLOR_DEPTH)
+		rowData = animation_data[current_frame_idx][row];
+
+		setLeds(row, rowData);
+
+		row++;
+		if(row == yres) // Have we finished all rows?
 		{
-			bit = 0;
+			row = 0;    // Reset to first row
+			bit++;    // Move to the next bit-plane
+
+			if(bit == COLOR_DEPTH) // Have we finished all bit-planes?
+			{
+				bit = 0; // Reset to first bit-plane
+			}
+
+			// Set the timer period for the *next* bit plane
+			TIM1->ARR = bitDuration[bit];
 		}
-		if(frame_counter == 7){
-			frame_counter = 0;
-			frame_index = !frame_index;
-		}
-		// SysTick->CMP = bitDuration[bit];
-		// Set the Auto Reload Register Value
-		TIM1->ARR = bitDuration[bit];
 	}
-	// SysTick->SR=0;
+
+	if(htim->Instance == TIM2){
+		// This timer dictates how fast the animation plays (FPS)
+		current_frame_idx++;
+
+		if (current_frame_idx >= ANIMATION_FRAMES) {
+			current_frame_idx = 0; // Loop back to start
+		}
+	}
 }
 
 void setLeds(uint8_t rowIndex, uint32_t rowArray){
@@ -1477,6 +1668,17 @@ void turn_on_all_LEDs_FAST(){
 //	//
 //	GPIOB->BSRR = GPIO_BSRR_BR10; GPIOB->BSRR = GPIO_BSRR_BS11;
 //	//
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    // if (GPIO_Pin == GPIO_PIN_12)
+    // {
+    // 	SystemClock_Config();  // Reconfigure system clocks
+    // 	HAL_ResumeTick();      // Resume SysTick
+    // }
+		// 4. Restore Clock (HSI -> PLL)
+	
 }
 
 /* USER CODE END 4 */
