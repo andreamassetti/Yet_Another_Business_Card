@@ -29,14 +29,44 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+// 1. STRUCTURES FOR LOOKUP TABLE
+typedef struct {
+    uint32_t PortA_CRL;
+    // uint32_t PortA_CRH; // REMOVED to protect SWD (PA13/PA14)
+    uint32_t PortA_ODR;
+
+    uint32_t PortB_CRL;
+    uint32_t PortB_CRH;
+    uint32_t PortB_ODR;
+
+    uint32_t PortC_CRL;
+    uint32_t PortC_CRH;
+    uint32_t PortC_ODR;
+
+    uint32_t PortD_CRL;
+    uint32_t PortD_CRH;
+    uint32_t PortD_ODR;
+} RowRegisterState;
+
+typedef struct {
+    GPIO_TypeDef* port;
+    uint8_t pinIndex;
+} PinDef;
+
+typedef struct {
+    PinDef anode;
+    PinDef cathodes[19];
+} HardwareRowDef;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define TICK_DELAY 0x3
-#define COLOR_DEPTH 1
+#define COLOR_DEPTH 2
 #define COLOR_COUNT (1 << COLOR_DEPTH)
 #define COLOR_MAX (COLOR_COUNT - 1)
+#define ROW_COUNT 20
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,14 +80,14 @@ TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 
-uint32_t bitDuration[COLOR_DEPTH];
+// uint32_t bitDuration[COLOR_DEPTH];
 #define xres 19
 #define yres 20
 uint8_t frameBuffer[yres * xres];
 
 volatile int frame = 0;
 
-volatile int current_frame_idx = 0;
+// volatile int current_frame_idx = 0;
 
 // uint32_t matrix_level_0[] = {349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762, 349525, 174762};
 // uint32_t matrix_level_1[] = {349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0, 349525, 0};
@@ -161,12 +191,30 @@ uint32_t frame_1[20] = {
 
 uint32_t rowData = 0;
 
-volatile uint8_t system_active = 1; // Flag to track if we are awake
-uint32_t last_activity_time = 0;    // Timer to track the 10 seconds
+// volatile uint8_t system_active = 1; // Flag to track if we are awake
+// uint32_t last_activity_time = 0;    // Timer to track the 10 seconds
 
 uint32_t reg_GPIOA_CRL, reg_GPIOB_CRL, reg_GPIOC_CRL, reg_GPIOD_CRL;
 uint32_t reg_GPIOA_CRH, reg_GPIOB_CRH, reg_GPIOC_CRH, reg_GPIOD_CRH;
 uint16_t reg_GPIOA_ODR, reg_GPIOB_ODR, reg_GPIOC_ODR, reg_GPIOD_ODR;
+
+RowRegisterState frameBufferLUT[ROW_COUNT][COLOR_DEPTH];
+
+uint32_t bitDuration[COLOR_DEPTH];
+volatile int current_frame_idx = 0;
+volatile uint8_t update_frame_flag = 1; // Flag to trigger calculation
+
+volatile uint8_t system_active = 1;
+uint32_t last_activity_time = 0;
+
+// 3. HARDWARE PIN MAPPING
+// The exact physical order of your Charlieplexing network
+const PinDef ALL_PINS[20] = {
+    {GPIOB, 11}, {GPIOB, 10}, {GPIOB, 2},  {GPIOB, 1},  {GPIOB, 0},
+    {GPIOA, 7},  {GPIOA, 6},  {GPIOA, 5},  {GPIOA, 4},  {GPIOA, 3},
+    {GPIOA, 2},  {GPIOA, 1},  {GPIOA, 0},  {GPIOD, 1},  {GPIOD, 0},
+    {GPIOC, 15}, {GPIOC, 14}, {GPIOC, 13}, {GPIOB, 9},  {GPIOB, 8}
+};
 
 /* USER CODE END PV */
 
@@ -185,6 +233,9 @@ void convertArrayToRegistersD(uint8_t rowIndex, uint32_t pinsD);
 void initBitDurationLUT(void);
 void setLeds(uint8_t rowIndex, uint32_t rowArray);
 void writeRegisters();
+void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef);
+void PrecomputeFrame(void);
+
 
 /* USER CODE END PFP */
 
@@ -251,6 +302,7 @@ int main(void)
 	// for (int y = 0; y < yres; y++) {
 	// 		frameBuffer[y * xres + 2] = 1;
 	// }
+	PrecomputeFrame();
 
   HAL_TIM_Base_Start_IT(&htim1);
 	HAL_TIM_Base_Start_IT(&htim2);
@@ -263,55 +315,91 @@ int main(void)
   last_activity_time = HAL_GetTick(); // Reset timer on startup
   
   while(1){
-		// 1. Check if 10 seconds (10000 ms) have passed
-		if(system_active && (HAL_GetTick() - last_activity_time > 10000)){
-			system_active = 0; // Time to sleep
-		}
+		// // 1. Check if 10 seconds (10000 ms) have passed
+		// if(system_active && (HAL_GetTick() - last_activity_time > 10000)){
+		// 	system_active = 0; // Time to sleep
+		// }
 
-		if(system_active){
-			// --- ACTIVE STATE ---
-			// Ensure Timer is running for LEDs
-			if (htim1.State != HAL_TIM_STATE_BUSY) {
-				HAL_TIM_Base_Start_IT(&htim1);
-				HAL_TIM_Base_Start_IT(&htim2);
-			}
+		// if(system_active){
+		// 	// --- ACTIVE STATE ---
+		// 	// Ensure Timer is running for LEDs
+		// 	if (htim1.State != HAL_TIM_STATE_BUSY) {
+		// 		HAL_TIM_Base_Start_IT(&htim1);
+		// 		HAL_TIM_Base_Start_IT(&htim2);
+		// 	}
 			
-			// If button is pressed while running, reset the 10s timer
-			if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET) {
-				last_activity_time = HAL_GetTick();
-			}
-		} else {
-			// --- SLEEP PREPARATION ---
+		// 	// If button is pressed while running, reset the 10s timer
+		// 	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET) {
+		// 		last_activity_time = HAL_GetTick();
+		// 	}
+		// } else {
+		// 	// --- SLEEP PREPARATION ---
 			
-			// 1. Stop the LED Timer (Crucial: prevents interrupts waking cpu)
-			HAL_TIM_Base_Stop_IT(&htim1);
-			HAL_TIM_Base_Stop_IT(&htim2);
+		// 	// 1. Stop the LED Timer (Crucial: prevents interrupts waking cpu)
+		// 	HAL_TIM_Base_Stop_IT(&htim1);
+		// 	HAL_TIM_Base_Stop_IT(&htim2);
 
-			// 2. TURN OFF ALL LEDs (Crucial: prevents battery drain)
-			// Based on your 'writeRegisters' logic, we can force ODR to 0.
-			// (We modify the shadow registers you created)
-			reg_GPIOA_ODR = 0;
-			reg_GPIOB_ODR = 0;
-			reg_GPIOC_ODR = 0;
-			reg_GPIOD_ODR = 0;
-			writeRegisters(); // Apply the "All Off" state
+		// 	// 2. TURN OFF ALL LEDs (Crucial: prevents battery drain)
+		// 	// Based on your 'writeRegisters' logic, we can force ODR to 0.
+		// 	// (We modify the shadow registers you created)
+		// 	reg_GPIOA_ODR = 0;
+		// 	reg_GPIOB_ODR = 0;
+		// 	reg_GPIOC_ODR = 0;
+		// 	reg_GPIOD_ODR = 0;
+		// 	writeRegisters(); // Apply the "All Off" state
 
-			// 3. Enter STOP Mode
-			// The CPU will halt here until PB12 is pressed
-			HAL_SuspendTick();
-			HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+		// 	// 3. Enter STOP Mode
+		// 	// The CPU will halt here until PB12 is pressed
+		// 	HAL_SuspendTick();
+		// 	HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 
-			// --- WAKE UP SEQUENCE ---
-			// The code resumes here immediately after the button press interrupt
+		// 	// --- WAKE UP SEQUENCE ---
+		// 	// The code resumes here immediately after the button press interrupt
 			
-			SystemClock_Config();  // Reconfigure system clocks
-			HAL_ResumeTick();      // Resume SysTick
+		// 	SystemClock_Config();  // Reconfigure system clocks
+		// 	HAL_ResumeTick();      // Resume SysTick
 
 
-			// 5. Reset logic to run again
-			system_active = 1;
-			last_activity_time = HAL_GetTick();
-		}
+		// 	// 5. Reset logic to run again
+		// 	system_active = 1;
+		// 	last_activity_time = HAL_GetTick();
+		// }
+		// --- SLEEP LOGIC ---
+    if(system_active && (HAL_GetTick() - last_activity_time > 10000)){
+        system_active = 0;
+        
+        // Disable Timers
+        HAL_TIM_Base_Stop_IT(&htim1);
+        HAL_TIM_Base_Stop_IT(&htim2);
+        
+        // Turn off all LEDs (Reset ODRs)
+        GPIOA->ODR = 0; 
+        GPIOB->ODR = (1<<12); // Keep PB12 Pull-Up!
+        GPIOC->ODR = 0; 
+        GPIOD->ODR = 0;
+
+        // Enter Stop Mode
+        HAL_SuspendTick();
+        HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+        
+        // --- WAKE UP ---
+        SystemClock_Config(); // Restore 48MHz clock
+        HAL_ResumeTick();
+        
+        system_active = 1;
+        last_activity_time = HAL_GetTick();
+        
+        // Restart Timers
+        HAL_TIM_Base_Start_IT(&htim1);
+        HAL_TIM_Base_Start_IT(&htim2);
+    }
+
+    // --- RENDER LOGIC ---
+    // Only calculate when the frame changes
+    if(system_active && update_frame_flag) {
+        PrecomputeFrame();
+        update_frame_flag = 0; // Clear flag
+    }
   	// turn_on_all_LEDs_FAST();
 
     /* USER CODE END WHILE */
@@ -378,7 +466,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 999;
+  htim1.Init.Prescaler = 49;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 8;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -574,47 +662,190 @@ uint32_t getRowDataFromFrameBuffer(int rowIndex, int bitPlane)
 	return rowData;
 }
 
-void initBitDurationLUT(void){
-	for(uint32_t i = 0; i < COLOR_DEPTH; i++){
-		int dur = (1 << i); // 1, 2, 4, 8...
-		bitDuration[i] = TICK_DELAY * dur; // Correct BCM duration
-	}
+//void initBitDurationLUT(void){
+//	for(uint32_t i = 0; i < COLOR_DEPTH; i++){
+//		int dur = (1 << i); // 1, 2, 4, 8...
+//		bitDuration[i] = TICK_DELAY * dur; // Correct BCM duration
+//	}
+//}
+
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
+// 	static int row = 0;
+// 	static int bit = 0;
+
+// 	if(htim->Instance == TIM1){
+
+// 		rowData = animation_data[current_frame_idx][row];
+
+// 		setLeds(row, rowData);
+
+// 		row++;
+// 		if(row == yres) // Have we finished all rows?
+// 		{
+// 			row = 0;    // Reset to first row
+// 			bit++;    // Move to the next bit-plane
+
+// 			if(bit == COLOR_DEPTH) // Have we finished all bit-planes?
+// 			{
+// 				bit = 0; // Reset to first bit-plane
+// 			}
+
+// 			// Set the timer period for the *next* bit plane
+// 			TIM1->ARR = bitDuration[bit];
+// 		}
+// 	}
+
+// 	if(htim->Instance == TIM2){
+// 		// This timer dictates how fast the animation plays (FPS)
+// 		current_frame_idx++;
+
+// 		if (current_frame_idx >= ANIMATION_FRAMES) {
+// 			current_frame_idx = 0; // Loop back to start
+// 		}
+// 	}
+// }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+    static int row = 0;
+    static int bit = 0;
+
+    if(htim->Instance == TIM1) // LED Refresh
+    {
+        // Pointer to the pre-calculated register state
+        RowRegisterState *state = &frameBufferLUT[row][bit];
+
+        // 1. Dump Registers (Takes ~20 cycles)
+        GPIOA->CRL = state->PortA_CRL;
+        // GPIOA->CRH = state->PortA_CRH; // DISABLED FOR SWD SAFETY (PA13/14)
+        GPIOA->ODR = state->PortA_ODR;
+
+        GPIOB->CRL = state->PortB_CRL;
+        GPIOB->CRH = state->PortB_CRH;
+        GPIOB->ODR = state->PortB_ODR;
+
+        GPIOC->CRL = state->PortC_CRL;
+        GPIOC->CRH = state->PortC_CRH;
+        GPIOC->ODR = state->PortC_ODR;
+
+        GPIOD->CRL = state->PortD_CRL;
+        GPIOD->CRH = state->PortD_CRH;
+        GPIOD->ODR = state->PortD_ODR;
+
+        // 2. Advance Counters
+        row++;
+        if(row >= ROW_COUNT)
+        {
+            row = 0;
+            bit++;
+            if(bit >= COLOR_DEPTH) bit = 0;
+            
+            TIM1->ARR = bitDuration[bit]; // Update BAM timing
+        }
+    }
+
+    if(htim->Instance == TIM2) // Animation Tick
+    {
+        current_frame_idx++;
+        if (current_frame_idx >= ANIMATION_FRAMES) {
+            current_frame_idx = 0;
+        }
+        update_frame_flag = 1; // Tell Main loop to calculate next frame
+    }
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
-	static int row = 0;
-	static int bit = 0;
+void PrecomputeFrame(void) {
+    const uint32_t DEFAULT_CRL = 0x44444444; 
+    const uint32_t DEFAULT_CRH = 0x44444444; 
 
-	if(htim->Instance == TIM1){
+    // SAFETY FOR PB12: Default CRH for Port B must set Pin 12 to Input Pull-Up/Down (0x8)
+    const uint32_t PORTB_CRH_SAFE = 0x44484444; 
+    const uint32_t PORTB_ODR_SAFE = (1 << 12); // Pull-Up selected
 
-		rowData = animation_data[current_frame_idx][row];
+    HardwareRowDef rowHardware;
 
-		setLeds(row, rowData);
+    for(int row = 0; row < ROW_COUNT; row++) {
+        GetHardwareRow(row, &rowHardware);
 
-		row++;
-		if(row == yres) // Have we finished all rows?
-		{
-			row = 0;    // Reset to first row
-			bit++;    // Move to the next bit-plane
+        for(int bitPlane = 0; bitPlane < COLOR_DEPTH; bitPlane++) {
+            
+            RowRegisterState *state = &frameBufferLUT[row][bitPlane];
 
-			if(bit == COLOR_DEPTH) // Have we finished all bit-planes?
-			{
-				bit = 0; // Reset to first bit-plane
-			}
+            // 1. Reset State to Safe Defaults
+            state->PortA_CRL = DEFAULT_CRL; 
+            state->PortA_ODR = 0; // CRH skipped for SWD
 
-			// Set the timer period for the *next* bit plane
-			TIM1->ARR = bitDuration[bit];
-		}
-	}
+            state->PortB_CRL = DEFAULT_CRL; 
+            state->PortB_CRH = PORTB_CRH_SAFE; // PB12 Safety
+            state->PortB_ODR = PORTB_ODR_SAFE; // PB12 Safety
 
-	if(htim->Instance == TIM2){
-		// This timer dictates how fast the animation plays (FPS)
-		current_frame_idx++;
+            state->PortC_CRL = DEFAULT_CRL; 
+            state->PortC_CRH = DEFAULT_CRH; 
+            state->PortC_ODR = 0;
 
-		if (current_frame_idx >= ANIMATION_FRAMES) {
-			current_frame_idx = 0; // Loop back to start
-		}
-	}
+            state->PortD_CRL = DEFAULT_CRL; 
+            state->PortD_CRH = DEFAULT_CRH; 
+            state->PortD_ODR = 0;
+
+            // 2. Configure ANODE (Active High)
+            PinDef anode = rowHardware.anode;
+            
+            // Determine Port Pointers
+            uint32_t *crl = (anode.pinIndex < 8) ? ((anode.port == GPIOA) ? &state->PortA_CRL : (anode.port == GPIOB) ? &state->PortB_CRL : (anode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+                                                 : ((anode.port == GPIOA) ? NULL : (anode.port == GPIOB) ? &state->PortB_CRH : (anode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+            
+            uint32_t *odr = (anode.port == GPIOA) ? &state->PortA_ODR : (anode.port == GPIOB) ? &state->PortB_ODR : (anode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+
+            if(crl) {
+                uint8_t shift = (anode.pinIndex % 8) * 4;
+                *crl &= ~(0xF << shift); 
+                *crl |=  (0x2 << shift); // Output 2MHz
+                *odr |=  (1 << anode.pinIndex); // HIGH
+            }
+
+            // 3. Configure CATHODES (Active Low)
+            uint32_t rowData = animation_data[current_frame_idx][row]; 
+
+            for(int col = 0; col < 19; col++) {
+                // Bit extraction logic (Modify if you increase COLOR_DEPTH)
+                // Currently checks if the specific column bit is High
+                if((rowData >> col) & 0x01) { 
+                    PinDef cathode = rowHardware.cathodes[col];
+                    
+                    uint32_t *c_crl = (cathode.pinIndex < 8) ? ((cathode.port == GPIOA) ? &state->PortA_CRL : (cathode.port == GPIOB) ? &state->PortB_CRL : (cathode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+                                                             : ((cathode.port == GPIOA) ? NULL : (cathode.port == GPIOB) ? &state->PortB_CRH : (cathode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+                    
+                    uint32_t *c_odr = (cathode.port == GPIOA) ? &state->PortA_ODR : (cathode.port == GPIOB) ? &state->PortB_ODR : (cathode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+
+                    if(c_crl) {
+                        uint8_t c_shift = (cathode.pinIndex % 8) * 4;
+                        *c_crl &= ~(0xF << c_shift);
+                        *c_crl |=  (0x2 << c_shift); // Output
+                        *c_odr &= ~(1 << cathode.pinIndex); // LOW
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Helper to map Row Index -> Hardware Pins
+void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef) {
+    int anodeIndex = 19 - rowIndex; 
+    rowDef->anode = ALL_PINS[anodeIndex];
+
+    int cathodeCount = 0;
+    for (int i = 0; i < 20; i++) {
+        if (i == anodeIndex) continue;
+        rowDef->cathodes[cathodeCount++] = ALL_PINS[i];
+    }
+}
+
+void initBitDurationLUT(void){
+    // Example logarithmic brightness for BAM
+    for(uint32_t i = 0; i < COLOR_DEPTH; i++){
+        bitDuration[i] = 20 * (1 << i); 
+    }
 }
 
 void setLeds(uint8_t rowIndex, uint32_t rowArray){
@@ -1680,6 +1911,106 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		// 4. Restore Clock (HSI -> PLL)
 	
 }
+
+// 1. Define the 20 pins in the exact physical order used by your circuit
+
+//
+//// 2. Helper to get the Anode and Cathodes for any row
+//// (This logic replaces the switch statement entirely)
+//void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef) {
+//    // Your logic runs backward: Row 0 uses Pin 19, Row 19 uses Pin 0
+//    int anodeIndex = 19 - rowIndex;
+//
+//    rowDef->anode = ALL_PINS[anodeIndex];
+//
+//    // Map columns to the remaining 19 pins
+//    // If the cathode index is >= anode index, we skip the anode pin
+//    int cathodeCount = 0;
+//    for (int i = 0; i < 20; i++) {
+//        if (i == anodeIndex) continue; // Skip the anode
+//        rowDef->cathodes[cathodeCount++] = ALL_PINS[i];
+//    }
+//}
+//
+//void PrecomputeFrame(void) {
+//    // Default: Input Floating (0x4)
+//    const uint32_t DEFAULT_CRL = 0x44444444;
+//    const uint32_t DEFAULT_CRH = 0x44444444;
+//
+//    // SAFETY FOR PB12: Default CRH for Port B must set Pin 12 to Input Pull-Up/Down (0x8)
+//    // Pin 12 is the lowest nibble of CRH [3:0] -> 0x....8
+//    const uint32_t PORTB_CRH_SAFE = 0x44484444;
+//
+//    // SAFETY FOR PB12: ODR must be 1 to select Pull-UP (not Pull-Down)
+//    const uint32_t PORTB_ODR_SAFE = (1 << 12);
+//
+//    HardwareRowDef rowHardware;
+//
+//    for(int row = 0; row < 20; row++) {
+//        // Get the pins for this row dynamically
+//        GetHardwareRow(row, &rowHardware);
+//
+//        for(int bitPlane = 0; bitPlane < COLOR_DEPTH; bitPlane++) {
+//
+//            RowRegisterState *state = &frameBufferLUT[row][bitPlane];
+//
+//            // 1. Initialize with SAFE defaults
+//            state->PortA_CRL = DEFAULT_CRL;
+//            // state->PortA_CRH = ... REMOVED to protect SWD (PA13/14)
+//            state->PortA_ODR = 0;
+//
+//            state->PortB_CRL = DEFAULT_CRL;
+//            state->PortB_CRH = PORTB_CRH_SAFE; // Protects PB12 Mode
+//            state->PortB_ODR = PORTB_ODR_SAFE; // Protects PB12 Pull-Up
+//
+//            state->PortC_CRL = DEFAULT_CRL;
+//            state->PortC_CRH = DEFAULT_CRH;
+//            state->PortC_ODR = 0;
+//
+//            state->PortD_CRL = DEFAULT_CRL;
+//            state->PortD_CRH = DEFAULT_CRH;
+//            state->PortD_ODR = 0;
+//
+//            // 2. Configure ANODE (Active High)
+//            PinDef anode = rowHardware.anode;
+//
+//            // Pointer selection logic...
+//            uint32_t *crl = (anode.pinIndex < 8) ? ((anode.port == GPIOA) ? &state->PortA_CRL : (anode.port == GPIOB) ? &state->PortB_CRL : (anode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+//                                                 : ((anode.port == GPIOA) ? NULL : (anode.port == GPIOB) ? &state->PortB_CRH : (anode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+//            // Note: NULL check added for PortA_CRH safety
+//
+//            uint32_t *odr = (anode.port == GPIOA) ? &state->PortA_ODR : (anode.port == GPIOB) ? &state->PortB_ODR : (anode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+//
+//            if(crl) {
+//                uint8_t shift = (anode.pinIndex % 8) * 4;
+//                *crl &= ~(0xF << shift);
+//                *crl |=  (0x2 << shift); // Output 2MHz
+//                *odr |=  (1 << anode.pinIndex); // HIGH
+//            }
+//
+//            // 3. Configure CATHODES (Active Low)
+//            uint32_t rowData = animation_data[current_frame_idx][row];
+//
+//            for(int col = 0; col < 19; col++) {
+//                if((rowData >> col) & 0x01) { // If pixel is ON
+//                    PinDef cathode = rowHardware.cathodes[col];
+//
+//                    uint32_t *c_crl = (cathode.pinIndex < 8) ? ((cathode.port == GPIOA) ? &state->PortA_CRL : (cathode.port == GPIOB) ? &state->PortB_CRL : (cathode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+//                                                             : ((cathode.port == GPIOA) ? NULL : (cathode.port == GPIOB) ? &state->PortB_CRH : (cathode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+//
+//                    uint32_t *c_odr = (cathode.port == GPIOA) ? &state->PortA_ODR : (cathode.port == GPIOB) ? &state->PortB_ODR : (cathode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+//
+//                    if(c_crl) {
+//                        uint8_t c_shift = (cathode.pinIndex % 8) * 4;
+//                        *c_crl &= ~(0xF << c_shift);
+//                        *c_crl |=  (0x2 << c_shift); // Output
+//                        *c_odr &= ~(1 << cathode.pinIndex); // LOW
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 /* USER CODE END 4 */
 
