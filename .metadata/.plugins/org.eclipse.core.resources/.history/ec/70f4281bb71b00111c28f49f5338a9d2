@@ -1,0 +1,639 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Optimized Main program body for Charlieplexing (4MHz Low Power)
+  * Updated for Hardware V2 Pin Assignments & 4-Button UI (19x18 Matrix)
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+// Represents the register state for one specific row/bit-plane
+typedef struct {
+    uint32_t PortA_CRL;
+    // uint32_t PortA_CRH; // EXCLUDED to protect SWD (PA13/PA14)
+    uint32_t PortA_ODR;
+
+    uint32_t PortB_CRL;
+    uint32_t PortB_CRH;
+    uint32_t PortB_ODR;
+
+    uint32_t PortC_CRL;
+    uint32_t PortC_CRH;
+    uint32_t PortC_ODR;
+
+    uint32_t PortD_CRL;
+    uint32_t PortD_CRH;
+    uint32_t PortD_ODR;
+} RowRegisterState;
+
+// Physical Pin Definition
+typedef struct {
+    GPIO_TypeDef* port;
+    uint8_t pinIndex;
+} PinDef;
+
+// Hardware Map for a Row
+typedef struct {
+    PinDef anode;
+    PinDef cathodes[18];
+} HardwareRowDef;
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define COLOR_DEPTH 2    // 2-bit BCM (4 brightness levels: 0, 1, 2, 3)
+#define ROW_COUNT 19
+#define COL_COUNT 18
+
+#define ANIMATION_FRAMES 1
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
+
+/* USER CODE BEGIN PV */
+
+// --- GLOBAL BUFFERS ---
+// The ISR reads from here. Main loop writes to here.
+RowRegisterState frameBufferLUT[ROW_COUNT][COLOR_DEPTH];
+
+uint32_t bitDuration[COLOR_DEPTH];
+volatile int current_frame_idx = 0;
+volatile uint8_t update_frame_flag = 1; // Flag to trigger calculation
+
+volatile uint8_t system_active = 1;
+uint32_t last_activity_time = 0;
+
+// --- HARDWARE PIN MAPPING (V2 - 19 Pins) ---
+const PinDef ALL_PINS[19] = {
+    {GPIOB, 0},  // CHRLY_1
+    {GPIOB, 1},  // CHRLY_2
+    {GPIOB, 2},  // CHRLY_3
+    {GPIOB, 3},  // CHRLY_4
+    {GPIOB, 4},  // CHRLY_5
+    {GPIOB, 5},  // CHRLY_6
+    {GPIOB, 6},  // CHRLY_7
+    {GPIOB, 7},  // CHRLY_8
+    {GPIOB, 8},  // CHRLY_9
+    {GPIOB, 9},  // CHRLY_10
+    {GPIOB, 10}, // CHRLY_11
+    {GPIOB, 11}, // CHRLY_12
+    {GPIOB, 12}, // CHRLY_13
+    {GPIOB, 13}, // CHRLY_14
+    {GPIOB, 14}, // CHRLY_15
+    {GPIOB, 15}, // CHRLY_16
+    {GPIOC, 13}, // CHRLY_17
+    {GPIOC, 14}, // CHRLY_18
+    {GPIOC, 15}  // CHRLY_19
+};
+
+// Dummy Frame Data sized to 19x18
+uint32_t video_frames[1][19][18] = {
+	{
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA},
+        {0x0D, 0x1A, 0x27, 0x34, 0x41, 0x4E, 0x5B, 0x68, 0x75, 0x82, 0x8F, 0x9C, 0xA9, 0xB6, 0xC3, 0xD0, 0xDD, 0xEA}
+    }
+};
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
+/* USER CODE BEGIN PFP */
+void initBitDurationLUT(void);
+void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef);
+void PrecomputeFrame(void);
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_TIM1_Init();
+  MX_TIM2_Init();
+  /* USER CODE BEGIN 2 */
+
+  // 2. Initial Frame Calculation
+	PrecomputeFrame();
+
+	// 3. Start Timers
+	HAL_TIM_Base_Start_IT(&htim1); // LED Refresh (High Speed)
+	HAL_TIM_Base_Start_IT(&htim2); // Animation Tick (Low Speed)
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+
+	  // --- SLEEP LOGIC (10 Seconds Timeout) ---
+	  if(system_active && (HAL_GetTick() - last_activity_time > 10000)){
+		  system_active = 0;
+
+		  // Disable Timers to stop interrupts
+		  HAL_TIM_Base_Stop_IT(&htim1);
+		  HAL_TIM_Base_Stop_IT(&htim2);
+
+		  // Turn off all LEDs (Reset ODRs to safe low state)
+		  GPIOA->ODR &= ~(0xFFFF); // Clear lower port A pins, leaving SWD untouched just in case
+		  GPIOB->ODR = 0;
+		  GPIOC->ODR = 0;
+		  GPIOD->ODR = 0;
+
+		  // Enter Stop Mode
+		  HAL_SuspendTick();
+		  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+
+		  // --- WAKE UP POINT ---
+		  SystemClock_Config(); // Restore 4 MHz clock
+		  HAL_ResumeTick();
+
+		  system_active = 1;
+		  last_activity_time = HAL_GetTick();
+
+		  // Restart Timers
+		  HAL_TIM_Base_Start_IT(&htim1);
+		  HAL_TIM_Base_Start_IT(&htim2);
+	  }
+
+	  // --- RENDER LOGIC ---
+	  // Only calculate when TIM2 says the frame has changed
+	  if(system_active && update_frame_flag) {
+		  PrecomputeFrame();
+		  update_frame_flag = 0;
+	  }
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 0;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 65535;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 65535;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_14|GPIO_PIN_15
+                          |GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC13 PC14 PC15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA0 PA1 PA2 PA3
+                           PA4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
+                          |GPIO_PIN_4;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB1 PB2 PB10
+                           PB11 PB12 PB14 PB15
+                           PB3 PB4 PB5 PB6
+                           PB7 PB8 PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_14|GPIO_PIN_15
+                          |GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6
+                          |GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
+
+/**
+  * @brief  ISR for LED Refresh (TIM1)
+  * @note   Extremely optimized register dump. No logic here.
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+    static int row = 0;
+    static int bit = 0;
+
+    if(htim->Instance == TIM1) // LED Refresh
+    {
+        // Pointer to the pre-calculated register state
+        RowRegisterState *state = &frameBufferLUT[row][bit];
+
+        // 1. Dump Registers (Takes ~20 cycles)
+        GPIOA->CRL = state->PortA_CRL;
+        // GPIOA->CRH = state->PortA_CRH; // DISABLED FOR SWD SAFETY
+        GPIOA->ODR = state->PortA_ODR;
+
+        GPIOB->CRL = state->PortB_CRL;
+        GPIOB->CRH = state->PortB_CRH;
+        GPIOB->ODR = state->PortB_ODR;
+
+        GPIOC->CRL = state->PortC_CRL;
+        GPIOC->CRH = state->PortC_CRH;
+        GPIOC->ODR = state->PortC_ODR;
+
+        GPIOD->CRL = state->PortD_CRL;
+        GPIOD->CRH = state->PortD_CRH;
+        GPIOD->ODR = state->PortD_ODR;
+
+        // 2. Advance Counters
+        row++;
+        if(row >= ROW_COUNT)
+        {
+            row = 0;
+            bit++;
+            if(bit >= COLOR_DEPTH) bit = 0;
+
+            TIM1->ARR = bitDuration[bit]; // Update BAM timing
+        }
+    }
+
+    if(htim->Instance == TIM2) // Animation Tick
+    {
+        current_frame_idx++;
+        if (current_frame_idx >= ANIMATION_FRAMES) {
+            current_frame_idx = 0;
+        }
+        update_frame_flag = 1; // Tell Main loop to calculate next frame
+    }
+}
+
+/**
+  * @brief  Calculates the LUT for the current frame based on 8-bit input.
+  * Runs in Main Loop.
+  */
+void PrecomputeFrame(void) {
+    const uint32_t DEFAULT_CRL = 0x44444444;
+    const uint32_t DEFAULT_CRH = 0x44444444;
+
+    // We no longer overwrite PA0-PA4 configurations here because
+    // Anodes/Cathodes never use those UI control pins.
+    // The Universal Default CRL for Port A is overridden below if we need it,
+    // but since we only use PB and PC, PortA_CRL will effectively just be reset to input floats
+    // EXCEPT we need to preserve PA0-PA4 pull-down inputs (0x8)!
+    const uint32_t PORTA_CRL_SAFE = 0x44488888; // PA0, PA1, PA2, PA3, PA4 = Input with Pull-up/down
+
+    HardwareRowDef rowHardware;
+
+    // Pre-calculate the divisor for thresholding
+    // For Depth 2 (4 levels): 256 / 4 = 64.
+    uint8_t divisor = 256 / (1 << COLOR_DEPTH);
+
+    for(int row = 0; row < ROW_COUNT; row++) {
+        GetHardwareRow(row, &rowHardware);
+
+        for(int bitPlane = 0; bitPlane < COLOR_DEPTH; bitPlane++) {
+
+            RowRegisterState *state = &frameBufferLUT[row][bitPlane];
+
+            // 1. Reset State to Safe Defaults
+            state->PortA_CRL = PORTA_CRL_SAFE; // Keep Buttons as Inputs
+            state->PortA_ODR = 0; // Ensures Pulldown is selected for PA0-PA4
+
+            state->PortB_CRL = DEFAULT_CRL;
+            state->PortB_CRH = DEFAULT_CRH;
+            state->PortB_ODR = 0;
+
+            state->PortC_CRL = DEFAULT_CRL;
+            state->PortC_CRH = DEFAULT_CRH;
+            state->PortC_ODR = 0;
+
+            state->PortD_CRL = DEFAULT_CRL;
+            state->PortD_CRH = DEFAULT_CRH;
+            state->PortD_ODR = 0;
+
+            // 2. Configure ANODE (Active High)
+            PinDef anode = rowHardware.anode;
+
+            // Determine Port Pointers
+            uint32_t *crl = (anode.pinIndex < 8) ? ((anode.port == GPIOA) ? &state->PortA_CRL : (anode.port == GPIOB) ? &state->PortB_CRL : (anode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+                                                 : ((anode.port == GPIOA) ? NULL : (anode.port == GPIOB) ? &state->PortB_CRH : (anode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+
+            uint32_t *odr = (anode.port == GPIOA) ? &state->PortA_ODR : (anode.port == GPIOB) ? &state->PortB_ODR : (anode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+
+            if(crl) {
+                uint8_t shift = (anode.pinIndex % 8) * 4;
+                *crl &= ~(0xF << shift);
+                *crl |=  (0x2 << shift); // Output 2MHz
+                *odr |=  (1 << anode.pinIndex); // HIGH
+            }
+
+            // 3. Configure CATHODES (Active Low)
+            for(int col = 0; col < COL_COUNT; col++) {
+
+                // --- THRESHOLD LOGIC ---
+                uint8_t rawBrightness = video_frames[current_frame_idx][row][col];
+
+                // Map 0-255 to 0-3 (if depth 2)
+                uint8_t pixelLevel = rawBrightness / divisor;
+
+                // Extract BCM bit
+                if( (pixelLevel >> bitPlane) & 0x01 ) {
+
+                    PinDef cathode = rowHardware.cathodes[col];
+
+                    uint32_t *c_crl = (cathode.pinIndex < 8) ? ((cathode.port == GPIOA) ? &state->PortA_CRL : (cathode.port == GPIOB) ? &state->PortB_CRL : (cathode.port == GPIOC) ? &state->PortC_CRL : &state->PortD_CRL)
+                                                             : ((cathode.port == GPIOA) ? NULL : (cathode.port == GPIOB) ? &state->PortB_CRH : (cathode.port == GPIOC) ? &state->PortC_CRH : &state->PortD_CRH);
+
+                    uint32_t *c_odr = (cathode.port == GPIOA) ? &state->PortA_ODR : (cathode.port == GPIOB) ? &state->PortB_ODR : (cathode.port == GPIOC) ? &state->PortC_ODR : &state->PortD_ODR;
+
+                    if(c_crl) {
+                        uint8_t c_shift = (cathode.pinIndex % 8) * 4;
+                        *c_crl &= ~(0xF << c_shift);
+                        *c_crl |=  (0x2 << c_shift); // Output
+                        *c_odr &= ~(1 << cathode.pinIndex); // LOW
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Helper to map Row Index -> Hardware Pins
+void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef) {
+    int anodeIndex = (ROW_COUNT - 1) - rowIndex; // For 19 rows, runs 18 down to 0
+    rowDef->anode = ALL_PINS[anodeIndex];
+
+    int cathodeCount = 0;
+    for (int i = 0; i < ROW_COUNT; i++) {
+        if (i == anodeIndex) continue;
+        rowDef->cathodes[cathodeCount++] = ALL_PINS[i];
+    }
+}
+
+
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

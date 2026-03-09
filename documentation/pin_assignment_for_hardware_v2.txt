@@ -17,3 +17,8 @@ CHRLY_16 = PB15
 CHRLY_17 = PC13
 CHRLY_18 = PC14
 CHRLY_19 = PC15
+
+PA0 = PA1 = button_left
+PA2 = button up
+PA3 = button down
+PA4 = button right
