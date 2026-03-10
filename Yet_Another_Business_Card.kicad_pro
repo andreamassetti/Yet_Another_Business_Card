@@ -463,9 +463,13 @@
   },
   "libraries": {
     "pinned_footprint_libs": [
-      "Stratobotic_EasyEda"
+      "Stratobotic_EasyEda",
+      "Stratobotic_custom",
+      "easyeda2kicad"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Stratobotic_custom"
+    ]
   },
   "meta": {
     "filename": "Yet_Another_Business_Card.kicad_pro",
