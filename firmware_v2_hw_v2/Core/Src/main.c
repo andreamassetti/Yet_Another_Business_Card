@@ -46,7 +46,12 @@ typedef struct {
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define TICK_DELAY 0x3
-#define COLOR_DEPTH 2
+// Animation playback rate, in frames per second. Set this to the FPS of the source
+// video used to generate animation_data so playback matches the original speed.
+// TIM2 is configured (in MX_TIM2_Init) to fire ANIM_FPS times per second and the
+// frame index advances by one each tick.
+#define ANIM_FPS 30
+// COLOR_DEPTH is defined in animations.h (data contract): 3 planes => 8 grey levels
 #define COLOR_COUNT (1 << COLOR_DEPTH)
 #define COLOR_MAX (COLOR_COUNT - 1)
 #define ROW_COUNT 19
@@ -226,8 +231,8 @@ int main(void)
     if(system_active && update_frame_flag) {
       if (current_mode == MODE_SNAKE) {
         static int snake_speed_divider = 0;
-        // Rallenta il frame rate del serpente: esegue l'update circa ogni 15 frame (3.3Hz)
-        if (++snake_speed_divider >= 15) {
+        // Rallenta il frame rate del serpente: ~3 mosse/sec (ANIM_FPS / 10)
+        if (++snake_speed_divider >= 10) {
           UpdateSnake();
           snake_speed_divider = 0;
         }
@@ -340,9 +345,11 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 3999;
+  // TIM2 clock = 4 MHz. Prescaler 99 -> 40 kHz tick. Period = 40000/ANIM_FPS - 1
+  // gives an update (interrupt) ANIM_FPS times per second; one frame advances per tick.
+  htim2.Init.Prescaler = 99;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 20;
+  htim2.Init.Period = (40000U / ANIM_FPS) - 1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -480,17 +487,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 
     if(htim->Instance == TIM2)
     {
-        static int anim_speed_divider = 0;
-        
-        // I primi 150 frame scorrono molto più lenti (divider a 4), i restanti tornano a velocità normale (divider a 1)
-        int current_divider = (current_frame_idx < 150) ? 4 : 1;
-        
-        if (++anim_speed_divider >= current_divider) {
-            current_frame_idx++;
-            if (current_frame_idx >= ANIMATION_FRAMES) {
-                current_frame_idx = 0;
-            }
-            anim_speed_divider = 0;
+        // TIM2 fires ANIM_FPS times per second -> advance one animation frame per tick,
+        // so playback runs at the source video's frame rate (set via ANIM_FPS).
+        current_frame_idx++;
+        if (current_frame_idx >= ANIMATION_FRAMES) {
+            current_frame_idx = 0;
         }
         update_frame_flag = 1; // Mantieni il tick per il resto del sistema
     }
@@ -535,17 +536,16 @@ void PrecomputeFrame(void) {
 
             // 3. Configure CATHODES (Active Low)
 
-			// OLD implementation
-            // uint32_t rowData = animation_data[current_frame_idx][row];
-
-			// NEW implementation
+			// Greyscale (Binary Code Modulation): for THIS bit plane, light only the pixels
+			// whose brightness has bit `bitPlane` set. The data is pre-decomposed into planes.
 			uint32_t rowData;
             if (current_mode == MODE_ANIMATION) {
                 // Applica lo specchio sull'asse Y per orientare correttamente l'animazione
                 // (row=0 su scheda = in basso, row=0 su array = in alto)
-                rowData = animation_data[current_frame_idx][(ROW_COUNT - 1) - row];
+                rowData = animation_data[current_frame_idx][bitPlane][(ROW_COUNT - 1) - row];
             } else {
-                // Modalità Gioco
+                // Modalità Gioco: la grafica è a piena luminosità (livello 7),
+                // quindi ogni pixel acceso è presente su tutti i piani di bit.
                 if (game_over && (HAL_GetTick() % 500 < 250)) {
                     rowData = 0; // Lampeggio dello schermo intero al Game Over
                 } else {
@@ -587,8 +587,12 @@ void GetHardwareRow(int rowIndex, HardwareRowDef *rowDef) {
 }
 
 void initBitDurationLUT(void){
+    // Binary Code Modulation: each plane is shown for a time proportional to its bit weight.
+    // Timer tick = 12.5us (TIM1 @ 80kHz). Base 10 ticks => planes last 125 / 250 / 500 us.
+    // Full 3-plane frame: 19 rows * (125+250+500)us ~= 16.6ms => ~60Hz refresh (no flicker).
+    // (Was base 20 with 2 planes; 3 planes at base 20 would drop to ~30Hz.)
     for(uint32_t i = 0; i < COLOR_DEPTH; i++){
-        bitDuration[i] = 20 * (1 << i);
+        bitDuration[i] = 10 * (1 << i);
     }
 }
 

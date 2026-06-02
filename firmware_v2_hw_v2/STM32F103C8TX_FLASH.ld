@@ -45,7 +45,10 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 20K
-  FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 64K
+  /* C8 is rated 64K, but most C8 dies physically have 128K. Bumped to fit the
+     8-level greyscale animation (3x the 1-bit data size). If the board fails to
+     run/flash past 64K, the extra flash isn't present -- revert this to 64K. */
+  FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 128K
 }
 
 /* Sections */
