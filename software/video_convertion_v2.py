@@ -10,26 +10,39 @@ TARGET_W = 19
 TARGET_H = 20
 
 # Greyscale via Binary Code Modulation: COLOR_DEPTH bit planes -> 2^COLOR_DEPTH levels.
-COLOR_DEPTH = 3              # must match animations.h
-GREY_LEVELS = 1 << COLOR_DEPTH   # 8 levels (0..7)
+COLOR_DEPTH = 4              # must match animations.h
+GREY_LEVELS = 1 << COLOR_DEPTH   # 16 levels (0..15)
 
 # Flash budget cap. Each greyscale frame costs COLOR_DEPTH * Y_RES * 4 bytes = 240 B.
 # With ~13 KB of code: 64K flash -> ~200 frames; 128K flash -> ~450 frames.
 # Only the FIRST MAX_FRAMES frames of the video are exported (set None for all).
-MAX_FRAMES = 400
-# BCM on-time is linear in level, but human brightness perception is not. A gamma > 1
-# pushes mid-tones darker so the ramp looks more even. Tune to taste (1.0 = linear).
-GAMMA = 2.2
+MAX_FRAMES = None
+# --- Tone mapping: how source luminance maps to the 8 LED levels ---
+# Applied per frame, in order: levels stretch -> gamma -> S-curve contrast -> quantize.
+# Kept FIXED (not auto per-frame) so brightness stays stable and the delta+RLE
+# compressor still works well (per-frame auto-contrast would make every frame differ).
+BLACK_POINT = 40    # input <= this -> level 0 (off). Set by the GUI "Black-level cutoff" slider.
+WHITE_POINT = 235   # input >= this -> max level. Lower it to brighten / clip highlights sooner.
+GAMMA       = 2.2   # midtone shaping: >1 darkens mids, <1 brightens mids (perception is non-linear)
+CONTRAST    = 1.8   # S-curve strength around mid-grey: 1.0 = off, higher = punchier. GUI slider.
 
 
-def quantize_to_levels(resized_gray, cutoff):
-    """Map an 8-bit grayscale image to 0..GREY_LEVELS-1 brightness levels.
-    Pixels below `cutoff` are forced to 0 (kills background noise); the rest of the
-    range [cutoff..255] is gamma-corrected and quantized."""
+def quantize_to_levels(resized_gray, black=BLACK_POINT, white=WHITE_POINT,
+                       gamma=GAMMA, contrast=CONTRAST):
+    """Map an 8-bit grayscale image to 0..GREY_LEVELS-1 brightness levels with contrast control.
+    1) Levels: stretch [black, white] -> [0,1] (black point kills background, white point
+       maps the brightest useful tone to full brightness -- the main contrast lever for 8 levels).
+    2) Gamma: shape midtones for perceptual evenness.
+    3) S-curve: push tones away from mid-grey for punchier contrast (contrast=1.0 disables it).
+    4) Quantize to the 8 levels."""
     g = resized_gray.astype(np.float32)
-    span = max(1, 255 - cutoff)
-    norm = np.clip((g - cutoff) / span, 0.0, 1.0)
-    norm = norm ** GAMMA
+    norm = np.clip((g - black) / max(1, (white - black)), 0.0, 1.0)
+    if gamma != 1.0:
+        norm = norm ** gamma
+    if contrast > 1.0:
+        # tanh S-curve normalized so 0->0 and 1->1, steepened around 0.5
+        s = np.tanh(contrast * (norm - 0.5)) / np.tanh(contrast * 0.5)
+        norm = np.clip(0.5 * (s + 1.0), 0.0, 1.0)
     return np.round(norm * (GREY_LEVELS - 1)).astype(np.uint8)
 
 class LEDConverterApp:
@@ -78,8 +91,16 @@ class LEDConverterApp:
         self.lbl_thresh = tk.Label(self.frame_controls, text="Black-level cutoff (40)")
         self.lbl_thresh.pack(pady=(10,0))
         self.scale_thresh = tk.Scale(self.frame_controls, from_=0, to=255, orient="horizontal", command=self.on_thresh_scroll)
-        self.scale_thresh.set(40)
+        self.scale_thresh.set(BLACK_POINT)
         self.scale_thresh.pack(fill="x")
+
+        # Contrast Slider (S-curve strength; 1.0 = off)
+        self.lbl_contrast = tk.Label(self.frame_controls, text=f"Contrast ({CONTRAST:.1f})")
+        self.lbl_contrast.pack(pady=(10, 0))
+        self.scale_contrast = tk.Scale(self.frame_controls, from_=1.0, to=4.0, resolution=0.1,
+                                       orient="horizontal", command=self.on_contrast_scroll)
+        self.scale_contrast.set(CONTRAST)
+        self.scale_contrast.pack(fill="x")
 
         # Generate Button
         self.btn_gen = tk.Button(root, text="GENERATE C CODE", bg="#dddddd", height=2, command=self.generate_code)
@@ -116,6 +137,11 @@ class LEDConverterApp:
             self.lbl_thresh.config(text=f"Black-level cutoff ({val})")
             self.update_preview()
 
+    def on_contrast_scroll(self, val):
+        if self.cap:
+            self.lbl_contrast.config(text=f"Contrast ({float(val):.1f})")
+            self.update_preview()
+
     def get_processed_frame(self, frame_idx):
         """ Fetches frame, resizes, and quantizes to GREY_LEVELS brightness levels """
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
@@ -132,7 +158,8 @@ class LEDConverterApp:
 
         # 3. Quantize to 0..GREY_LEVELS-1, then scale back to 0..255 for an honest preview
         cutoff = int(self.scale_thresh.get())
-        levels = quantize_to_levels(resized, cutoff)
+        contrast = float(self.scale_contrast.get())
+        levels = quantize_to_levels(resized, black=cutoff, contrast=contrast)
         preview = (levels.astype(np.float32) * (255.0 / (GREY_LEVELS - 1))).astype(np.uint8)
 
         return frame_rgb, preview
@@ -170,6 +197,7 @@ class LEDConverterApp:
             return
 
         cutoff = int(self.scale_thresh.get())
+        contrast = float(self.scale_contrast.get())
 
         # Read frames SEQUENTIALLY (one cap.set seek up front, then plain reads). Per-frame
         # random-access seeking is very slow on most codecs and is what made the long export
@@ -189,7 +217,7 @@ class LEDConverterApp:
                 # Process -> per-pixel brightness level 0..GREY_LEVELS-1
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 resized = cv2.resize(gray, (TARGET_W, TARGET_H), interpolation=cv2.INTER_AREA)
-                levels = quantize_to_levels(resized, cutoff)
+                levels = quantize_to_levels(resized, black=cutoff, contrast=contrast)
 
                 lines = [f"\t{{ /* Frame {i} */\n"]
                 # Decompose each pixel's level into bit planes: plane p holds bit p of the level.

@@ -11,16 +11,16 @@
 #include <stdint.h>
 
 // Dimensions
-#define ANIMATION_FRAMES  400  // Must match the count in the generated data .c file
-#define COLOR_DEPTH       3    // Greyscale bit planes -> 2^3 = 8 brightness levels (0..7)
+#define ANIMATION_FRAMES  515  // Must match the count in the generated data .c file
+#define COLOR_DEPTH       4    // Greyscale bit planes -> 2^4 = 16 brightness levels (0..15)
 #define Y_RES             20
 #define X_RES             19
 
-// Greyscale data is stored as BIT PLANES (Binary Code Modulation).
-//   animation_data[frame][plane][row]  == column mask of pixels lit during that plane.
-// A pixel's 3-bit brightness B is spread across the planes: plane p is set when bit p of B is 1.
-// Plane 0 is the LSB (shortest on-time), plane COLOR_DEPTH-1 is the MSB (longest on-time).
-// "extern" means: "This variable exists in another .c file, don't create it here, just link to it."
-extern const uint32_t animation_data[ANIMATION_FRAMES][COLOR_DEPTH][Y_RES];
+// Frames are stored COMPRESSED (temporal delta + RLE) in `anim_rle`, and decoded one
+// frame at a time into a RAM buffer by the firmware. See encode_delta_rle.py / GREYSCALE.md.
+// Each frame is COLOR_DEPTH*Y_RES = 60 uint32 words (plane-major: idx = plane*Y_RES + row),
+// where each word is a greyscale bit-plane column mask (Binary Code Modulation).
+extern const uint8_t  anim_rle[];     // compressed byte stream
+extern const uint32_t anim_rle_len;   // length of anim_rle in bytes
 
 #endif /* INC_ANIMATIONS_H_ */

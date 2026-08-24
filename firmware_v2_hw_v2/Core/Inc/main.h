@@ -54,6 +54,9 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+// Lean TIM1 display update (called from the bare-metal TIM1_UP_IRQHandler in stm32f1xx_it.c)
+void TIM1_DisplayUpdate(void);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

@@ -261,7 +261,15 @@ void EXTI4_IRQHandler(void)
 void TIM1_UP_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM1_UP_IRQn 0 */
-
+  // Lean path: this fires very often (rows x planes x refresh). Bypass HAL_TIM_IRQHandler
+  // (which costs ~15-25us at 4 MHz) and do only the minimum: clear the update flag and
+  // push the next display slot. This keeps the short LSB bit-plane linear at COLOR_DEPTH=4.
+  if (TIM1->SR & TIM_SR_UIF)
+  {
+    TIM1->SR = ~TIM_SR_UIF;   // clear update flag (SR bits are clear-by-writing-0)
+    TIM1_DisplayUpdate();
+    return;
+  }
   /* USER CODE END TIM1_UP_IRQn 0 */
   HAL_TIM_IRQHandler(&htim1);
   /* USER CODE BEGIN TIM1_UP_IRQn 1 */
